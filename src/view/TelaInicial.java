@@ -37,10 +37,11 @@ public class TelaInicial implements ActionListener {
 	
 
 	public static void main(String[] args) {
-		TelaInicial menu = new TelaInicial();
+		new TelaCadastrarTecnico();
+		//TelaInicial menu = new TelaInicial();
 		
-		tabela.addActionListener(menu);
-		admin.addActionListener(menu);
+		//tabela.addActionListener(menu);
+		//admin.addActionListener(menu);
 	}
 	
 	public void actionPerformed(ActionEvent e) {

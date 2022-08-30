@@ -2,8 +2,8 @@ package model;
 
 abstract class Funcionario {
 	private String nome;
-	private String nacionalidade;
 	private String dtNascimento;
+	private String nacionalidade;
 	private Double salario;
 	private Double multa;
 	

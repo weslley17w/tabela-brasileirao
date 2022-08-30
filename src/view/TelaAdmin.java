@@ -107,7 +107,7 @@ public class TelaAdmin implements ActionListener{
 				System.out.println("btnEditarTecnico");
 		
 		if(src == btnCadastrarTecnico)
-			System.out.println("btnCadastrarTecnico");
+			new TelaCadastrarTecnico();
 
 		
 	}
