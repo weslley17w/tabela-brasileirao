@@ -6,12 +6,13 @@ import javax.swing.table.DefaultTableModel;
 import model.Time;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class TelaAdmin extends JFrame {
+public class TelaAdmin implements ActionListener{
 
-	private static final long serialVersionUID = -5547498367822791169L;
 	JTabbedPane tabbedPane = new JTabbedPane();
+	JFrame frame = new JFrame();
 	private static JButton btnCadastrarTime = new JButton("Cadastrar");
 	private static JButton btnEditarTime = new JButton("Editar");
 	private static JLabel tituloTimes = new JLabel("Times");
@@ -19,16 +20,16 @@ public class TelaAdmin extends JFrame {
 	private static controller.Times contorllerTimes = new controller.Times();
 
 	public TelaAdmin() {
-		setTitle("Jogadores");
+		frame.setTitle("Jogadores");
 		tabbedPane.addTab("Times", times());
 		tabbedPane.addTab("Técnicos", painel2());
-		add(tabbedPane);
-		setResizable(false);
-		setVisible(true);
-		setSize(600, 500);
-		setLocationRelativeTo(null);
-		setMinimumSize(new Dimension(getWidth(), getHeight()));
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		frame.add(tabbedPane);
+		frame.setResizable(false);
+		frame.setVisible(true);
+		frame.setSize(600, 500);
+		frame.setLocationRelativeTo(null);
+		frame.setMinimumSize(new Dimension(frame.getWidth(), frame.getHeight()));
+		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
 	public JComponent times() {
@@ -45,6 +46,8 @@ public class TelaAdmin extends JFrame {
 		btnEditarTime.setBounds(350, 370, 91, 28);
 		tabelaTimes.setFillsViewportHeight(true);
 		scrollPane.setBounds(38, 60, 500, 300);
+		btnCadastrarTime.addActionListener(this);
+		btnEditarTime.addActionListener(this);
 		
 
 		//Add Screen
@@ -53,7 +56,7 @@ public class TelaAdmin extends JFrame {
 		panelTime.add(scrollPane);
 		panelTime.add(btnEditarTime);
 		panelTime.add(btnCadastrarTime);
-		setVisible(true);
+		frame.setVisible(true);
 		tituloTimes.setVisible(true);
 		
 		return panelTime;
@@ -70,6 +73,22 @@ public class TelaAdmin extends JFrame {
 		});
 		
 
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		Object src = e.getSource();
+		
+		if(src == btnCadastrarTime)
+			new TelaCadastrarTime();
+			
+		
+		if(src == btnEditarTime) {
+			int row;
+			row = tabelaTimes.getSelectedRow();
+			String value = tabelaTimes.getModel().getValueAt(row, 0).toString();
+			System.out.println(value);
+		}
+		
 	}
 
 	public JComponent painel2() {
