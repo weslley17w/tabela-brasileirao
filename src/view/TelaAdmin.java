@@ -3,7 +3,6 @@ package view;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import model.Time;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,14 +14,17 @@ public class TelaAdmin implements ActionListener{
 	JFrame frame = new JFrame();
 	private static JButton btnCadastrarTime = new JButton("Cadastrar");
 	private static JButton btnEditarTime = new JButton("Editar");
+	private static JButton btnCadastrarTecnico = new JButton("Cadastrar");
+	private static JButton btnEditarTecnico = new JButton("Editar");
 	private static JLabel tituloTimes = new JLabel("Times");
 	private JTable tabelaTimes = new JTable();
+	private JTable tabelaTecnicos = new JTable();
 	private static controller.Times contorllerTimes = new controller.Times();
 
 	public TelaAdmin() {
 		frame.setTitle("Jogadores");
 		tabbedPane.addTab("Times", times());
-		tabbedPane.addTab("Técnicos", painel2());
+		tabbedPane.addTab("Técnicos", tecnicos());
 		frame.add(tabbedPane);
 		frame.setResizable(false);
 		frame.setVisible(true);
@@ -75,6 +77,18 @@ public class TelaAdmin implements ActionListener{
 
 	}
 	
+	private void dadosTecnicos() {
+		DefaultTableModel modeloTabelaTecnicos = new DefaultTableModel();
+		this.tabelaTecnicos.setModel(modeloTabelaTecnicos);
+		
+		modeloTabelaTecnicos.addColumn("NOME");
+		modeloTabelaTecnicos.addColumn("APROVEITAMENTO");
+		modeloTabelaTecnicos.addRow(new Object[] { "Diniz", "50%" });
+
+		
+
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 		
@@ -89,13 +103,40 @@ public class TelaAdmin implements ActionListener{
 			System.out.println(value);
 		}
 		
+		if(src == btnEditarTecnico)
+				System.out.println("btnEditarTecnico");
+		
+		if(src == btnCadastrarTecnico)
+			System.out.println("btnCadastrarTecnico");
+
+		
 	}
 
-	public JComponent painel2() {
-		JPanel painel2 = new JPanel();
-		JLabel label2;
-		label2 = new JLabel("Técnicos");
-		painel2.add(label2);
-		return painel2;
+	public JComponent tecnicos() {
+		JPanel panelTecnicos 	  = new JPanel();
+		panelTecnicos.setLayout(null);
+		dadosTecnicos();
+		JLabel tituloTecnico  = new JLabel("Técnicos");
+		tabelaTecnicos.setDefaultEditor(Object.class, null);
+		JScrollPane scrollPane = new JScrollPane(tabelaTecnicos);
+		
+		
+		tituloTecnico.setFont(new Font("Calibri", Font.BOLD, 20));
+		tituloTecnico.setBounds(250, 20, 80, 25);
+		
+		btnCadastrarTecnico.setBounds(446, 370, 91, 28);
+		btnEditarTecnico.setBounds(350, 370, 91, 28);
+		tabelaTecnicos.setFillsViewportHeight(true);
+		scrollPane.setBounds(38, 60, 500, 300);
+		btnCadastrarTecnico.addActionListener(this);
+		btnEditarTecnico.addActionListener(this);
+		
+		panelTecnicos.add(tituloTecnico);
+		panelTecnicos.add(scrollPane);
+		panelTecnicos.add(btnEditarTecnico);
+		panelTecnicos.add(btnCadastrarTecnico);
+		frame.setVisible(true);
+		tituloTimes.setVisible(true);
+		return panelTecnicos;
 	}
 }
