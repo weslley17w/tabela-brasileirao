@@ -6,14 +6,33 @@ import java.util.Collections;
 
 public class Time {
 	private String nome;
-	private Tecnico tecnico;
-	ArrayList<Jogador> jogadores = new ArrayList<>();
+	private String tecnico;
+	ArrayList<String> jogadores;
 	private int qntJogos = 0;
 	private int qntVitorias = 0;
 	private int qntEmpates = 0;
 	private int qntDerrotas = 0;
 	private int qntGolsFeitos = 0;
 	private int qntGolsSofridos = 0;
+	
+	
+	public Time(String nome, int qntJogos, int qntVitorias, int qntEmpates, int qntDerrotas, int qntGolsFeitos, int qntGolsSofridos) {
+		this.setNome(nome);
+		this.setQntJogos(qntJogos);
+		this.setQntVitorias(qntVitorias);
+		this.setQntEmpates(qntEmpates);
+		this.setQntDerrotas(qntDerrotas);
+		this.setQntGolsFeitos(qntGolsFeitos);
+		this.setQntGolsSofridos(qntGolsSofridos);
+	}
+	
+	public String getTecnico() {
+		return tecnico;
+	}
+
+	public void setTecnico(String tecnico) {
+		this.tecnico = tecnico;
+	}
 
 	public Time(String nome) {
 		this.setNome(nome);
@@ -30,14 +49,7 @@ public class Time {
 		return true;
 	}
 
-	public Tecnico getTecnico() {
-		return tecnico;
-	}
-
-	public void setTecnico(Tecnico tecnico) {
-		this.tecnico = tecnico;
-	}
-
+	
 	public int getQntVitorias() {
 		return qntVitorias;
 	}
@@ -88,14 +100,6 @@ public class Time {
 
 	public void setQntGolsSofridos(int qntGolsSofridos) {
 		this.qntGolsSofridos = qntGolsSofridos;
-	}
-
-	public void contratarJogador(Jogador jogador) {
-		jogadores.add(jogador);
-	}
-
-	public void contratarTecnico(Tecnico tecnico) {
-		setTecnico(tecnico);
 	}
 
 	public void gerarArtilheiros(Tecnico tecnico) {
