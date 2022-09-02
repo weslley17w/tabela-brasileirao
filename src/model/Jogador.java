@@ -5,7 +5,7 @@ public class Jogador extends Funcionario{
 	int qntGols = 0;
 	boolean passaporteEuropeu;
 	
-	public Jogador(String nome, String nacionalidade,String dtNascimento, Double salario, Double multa, boolean passaporteEuropeu) {
+	public Jogador(String nome, String nacionalidade,String dtNascimento, float salario, float multa, boolean passaporteEuropeu) {
 		setNome(nome);
 		setNacionalidade(nacionalidade);
 		setDtNascimento(dtNascimento);

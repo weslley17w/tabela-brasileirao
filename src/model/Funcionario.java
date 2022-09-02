@@ -1,17 +1,24 @@
 package model;
 
 abstract class Funcionario {
+	private String uuid;
 	private String nome;
 	private String dtNascimento;
 	private String nacionalidade;
-	private Double salario;
-	private Double multa;
+	private float salario;
+	private float multa;
 	
 	public  String getNome() {
 		return nome;
 	}
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	public String getUuid() {
+		return uuid;
 	}
 	public String getNacionalidade() {
 		return nacionalidade;
@@ -25,16 +32,16 @@ abstract class Funcionario {
 	public void setDtNascimento(String dtNascimento) {
 		this.dtNascimento = dtNascimento;
 	}
-	public Double getSalario() {
+	public float getSalario() {
 		return salario;
 	}
-	public void setSalario(Double salario) {
+	public void setSalario(float salario) {
 		this.salario = salario;
 	}
-	public Double getMulta() {
+	public float getMulta() {
 		return multa;
 	}
-	public void setMulta(Double multa) {
+	public void setMulta(float multa) {
 		this.multa = multa;
 	}
 	
