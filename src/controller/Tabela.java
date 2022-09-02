@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import model.Time;
 
 public class Tabela {
-	private model.Tabela tabela = model.Tabela.getInstance();
+	private model.Database tabela = model.Database.getInstance();
 	
 	public ArrayList<Time> getDados() {
 		tabela.ordenarTabela();
