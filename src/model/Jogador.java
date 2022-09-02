@@ -1,11 +1,14 @@
 package model;
 
+import java.util.UUID;
+
 public class Jogador extends Funcionario{
 	
 	int qntGols = 0;
 	boolean passaporteEuropeu;
 	
 	public Jogador(String nome, String nacionalidade,String dtNascimento, float salario, float multa, int qntGols, boolean passaporteEuropeu) {
+		setUuid(UUID.randomUUID().toString());
 		setNome(nome);
 		setNacionalidade(nacionalidade);
 		setDtNascimento(dtNascimento);

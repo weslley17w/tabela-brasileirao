@@ -110,7 +110,6 @@ public class TelaAdmin implements ActionListener{
 			int row = tabelaTecnicos.getSelectedRow();
 			if(row >= 0) {
 				String tecnico = tabelaTecnicos.getModel().getValueAt(row, 0).toString();
-				System.out.println(tecnico);
 				new TelaEditarTecnico(tecnico);
 
 			}else {
@@ -143,6 +142,17 @@ public class TelaAdmin implements ActionListener{
 		
 		if(src == btnCadastrarJogador) {
 			new TelaCadastrarJogador();
+		}
+		
+		if(src == btnEditarJogador) {
+			int row = tabelaJogador.getSelectedRow();
+			String jogador = tabelaJogador.getModel().getValueAt(0, 0).toString();
+			if(row >= 0) {
+				new TelaEditarJogador(jogador);
+			}else {
+				JOptionPane.showMessageDialog(null, "Selecione um jogador para poder editar",
+						"Selecione um jogador", JOptionPane.WARNING_MESSAGE);	
+			}
 		}
 		
 	}

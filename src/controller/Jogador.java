@@ -64,6 +64,44 @@ public class Jogador {
 
 		return saida;
 	}
+	
+	public int Editar(String id, String nome, String nacionalidade,String dtNascimento, String salario, String multa, String qntGols, String passaporteEuropeu) {
+		int saida = 0;
+
+
+		if (passaporteEuropeu == "Sim") {
+			this.passaporteEuropeu = true;
+		} else {
+			this.passaporteEuropeu = false;
+		}
+
+
+		try {
+			this.salario = Float.parseFloat(salario);
+			this.multa = Float.parseFloat(multa);
+		} catch (NumberFormatException ex) {
+			saida = 3;
+		}
+
+		try {
+			this.qntGols = Integer.parseInt(qntGols);
+		} catch (final NumberFormatException e) {
+			saida = 4;
+		}
+		
+		if (nome.isEmpty() || dtNascimento.isEmpty() || nacionalidade.isEmpty() || salario.isEmpty() || multa.isEmpty()
+				|| multa.isEmpty() || qntGols.isEmpty() || passaporteEuropeu.isEmpty()) {
+			saida = 2;
+		}
+
+		if (saida == 0) {
+			db.updateJogador(id, nome, nacionalidade,dtNascimento, this.salario, this.multa, this.qntGols, this.passaporteEuropeu);
+		}
+		
+		
+
+		return saida;
+	}
 
 	
 }

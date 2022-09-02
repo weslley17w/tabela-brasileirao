@@ -11,8 +11,6 @@ public class Database {
 	ArrayList<Tecnico> tecnicos = new ArrayList<>();
 	ArrayList<Jogador> jogadores = new ArrayList<>();
 	
-	
-
 	public ArrayList<Jogador> getJogadores() {
 		return jogadores;
 	}
@@ -55,6 +53,41 @@ public class Database {
 				saida = tecnico;
 				break;
 			}
+		}
+		
+		return saida;
+	}
+	
+	public Jogador getJogador(String id) {
+		Jogador saida = null;
+		for(Jogador jogador : jogadores) {
+			
+			if(jogador.getUuid() == id) {
+				saida = jogador;
+				break;
+			}
+		}
+		
+		return saida;
+
+	}
+	
+	public Jogador updateJogador(String id, String nome, String nacionalidade,String dtNascimento, float salario, float multa, int qntGols, boolean passaporteEuropeu){
+		Jogador saida = null;
+		for(Jogador jogador : jogadores) {
+			
+			if(jogador.getUuid() == id) {
+				jogador.setNome(nome);
+				jogador.setNacionalidade(nacionalidade);
+				jogador.setDtNascimento(dtNascimento);
+				jogador.setSalario(salario);
+				jogador.setMulta(multa);
+				jogador.setQntGols(qntGols);
+				jogador.setPassaporteEuropeu(passaporteEuropeu);
+				saida = jogador;
+				break;
+			}
+			
 		}
 		
 		return saida;
