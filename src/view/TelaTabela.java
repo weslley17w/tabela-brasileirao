@@ -27,8 +27,7 @@ public class TelaTabela extends JFrame {
 
 		this.Tabela();
 		setLocationRelativeTo(null);
-
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
 	private void Tabela() {

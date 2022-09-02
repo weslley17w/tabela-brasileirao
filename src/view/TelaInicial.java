@@ -3,8 +3,8 @@ package view;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import model.Database;
 
-import controller.Database;
 
 
 public class TelaInicial implements ActionListener {
@@ -16,7 +16,7 @@ public class TelaInicial implements ActionListener {
 
 	
 	public TelaInicial() {
-		controller.Database db = new Database();
+		model.Database db = Database.getInstance();
 		db.init();
 		titulo.setFont(new Font("Arial", Font.BOLD, 20));
 		titulo.setBounds(120, 10, 150, 30);
@@ -37,11 +37,10 @@ public class TelaInicial implements ActionListener {
 	
 
 	public static void main(String[] args) {
-		new TelaCadastrarTecnico();
-		//TelaInicial menu = new TelaInicial();
+		TelaInicial menu = new TelaInicial();
 		
-		//tabela.addActionListener(menu);
-		//admin.addActionListener(menu);
+		tabela.addActionListener(menu);
+		admin.addActionListener(menu);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
