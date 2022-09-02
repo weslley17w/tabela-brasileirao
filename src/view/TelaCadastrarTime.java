@@ -22,7 +22,7 @@ public class TelaCadastrarTime implements ActionListener {
 
 		
 		janela.setSize(800, 800);
-		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		janela.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		janela.setVisible(true);
 	}
 	
