@@ -15,13 +15,13 @@ public class TelaCadastrarJogador implements ActionListener {
 	
 	public TelaCadastrarJogador() {
 		
-		janela.setLayout(null);
+		janela.setLayout(null);	
 		tela();
 		
 
 		
 		janela.setSize(350, 500);
-		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		janela.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		janela.setVisible(true);
 	}
 	//  multa
