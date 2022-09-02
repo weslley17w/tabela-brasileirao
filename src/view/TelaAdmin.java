@@ -18,16 +18,22 @@ public class TelaAdmin implements ActionListener{
 	private static JButton btnAtualizarTecnico = new JButton("Atualizar");
 	private static JButton btnCadastrarTecnico = new JButton("Cadastrar");
 	private static JButton btnEditarTecnico = new JButton("Editar");
+	private static JButton btnAtualizarJogador = new JButton("Atualizar");
+	private static JButton btnCadastrarJogador = new JButton("Cadastrar");
+	private static JButton btnEditarJogador = new JButton("Editar");
 	private static JLabel tituloTimes = new JLabel("Times");
 	private JTable tabelaTimes = new JTable();
 	private JTable tabelaTecnicos = new JTable();
+	private JTable tabelaJogadores = new JTable();
 	private static controller.Times contorllerTimes = new controller.Times();
 	private static controller.Tecnico contorllerTecnico = new controller.Tecnico();
+	private static controller.Jogador contorllerJogador = new controller.Jogador();
 
 	public TelaAdmin() {
 		frame.setTitle("Jogadores");
 		tabbedPane.addTab("Times", times());
 		tabbedPane.addTab("Técnicos", tecnicos());
+		tabbedPane.addTab("Jogadores", jogadores());
 		frame.add(tabbedPane);
 		frame.setResizable(false);
 		frame.setVisible(true);
@@ -54,7 +60,6 @@ public class TelaAdmin implements ActionListener{
 		btnCadastrarTime.addActionListener(this);
 		btnEditarTime.addActionListener(this);
 		
-
 		//Add Screen
 		
 		panelTime.add(tituloTimes);
@@ -76,11 +81,8 @@ public class TelaAdmin implements ActionListener{
 		contorllerTimes.getTimes().forEach(time -> {
 			modeloTabelaTimes.addRow(new Object[] { time.getNome(), time.getPontos() });
 		});
-		
 
 	}
-	
-	
 	
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
@@ -89,8 +91,6 @@ public class TelaAdmin implements ActionListener{
 			new TelaCadastrarTime();
 		}
 			
-			
-		
 		if(src == btnEditarTime) {
 			
 			int row = tabelaTimes.getSelectedRow();
@@ -103,8 +103,6 @@ public class TelaAdmin implements ActionListener{
 				System.out.println(time);
 			}
 
-			
-			
 		}
 		
 		if(src == btnEditarTecnico) {
@@ -174,5 +172,40 @@ public class TelaAdmin implements ActionListener{
 		frame.setVisible(true);
 		tituloTimes.setVisible(true);
 		return panelTecnicos;
+	}
+	
+	public JComponent jogadores() {
+		JPanel panelJogadores = new JPanel();
+		panelJogadores.setLayout(null);
+		this.tabelaJogadores.setModel(contorllerJogador.gerarLista());
+		TableColumn colunauuid = this.tabelaJogadores.getTableHeader().getColumnModel().getColumn(0);
+		colunauuid.setPreferredWidth(0);
+		colunauuid.setMinWidth(0);
+		colunauuid.setMaxWidth(0);
+		JLabel tituloJogadores  = new JLabel("Jogadores");
+		tabelaJogadores.setDefaultEditor(Object.class, null);
+		JScrollPane scrollPane = new JScrollPane(tabelaJogadores);
+		
+		
+		tituloJogadores.setFont(new Font("Calibri", Font.BOLD, 20));
+		tituloJogadores.setBounds(230, 20, 120, 25);
+		
+		btnAtualizarJogador.setBounds(446, 20, 91, 28);
+		btnCadastrarJogador.setBounds(446, 370, 91, 28);
+		btnEditarJogador.setBounds(350, 370, 91, 28);
+		tabelaJogadores.setFillsViewportHeight(true);
+		scrollPane.setBounds(38, 60, 500, 300);
+		btnCadastrarJogador.addActionListener(this);
+		btnEditarJogador.addActionListener(this);
+		btnAtualizarJogador.addActionListener(this);
+		
+		panelJogadores.add(tituloJogadores);
+		panelJogadores.add(scrollPane);
+		panelJogadores.add(btnAtualizarJogador);
+		panelJogadores.add(btnEditarJogador);
+		panelJogadores.add(btnCadastrarJogador);
+		frame.setVisible(true);
+		tituloTimes.setVisible(true);
+		return panelJogadores;
 	}
 }

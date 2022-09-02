@@ -9,6 +9,7 @@ public class Database {
 	private static Database uniqueInstance = new Database();
 	ArrayList<Time> times = new ArrayList<>();
 	ArrayList<Tecnico> tecnicos = new ArrayList<>();
+	ArrayList<Jogador> jogadores = new ArrayList<>();
 	
 
 	public ArrayList<Tecnico> getTecnicos() {
@@ -29,7 +30,10 @@ public class Database {
 
 	}
 
-	
+	public ArrayList<Jogador> getJogadores() {
+		return jogadores;
+	}
+
 	public Tecnico updateTecnico(String id, String nome, String nacionalidade,String dtNascimento, float salario, float multa, boolean licencaCBF,
 			Boolean licencaInternacional, int qntVitorias, int qntEmpates, int qntDerrotas){
 		Tecnico saida = null;

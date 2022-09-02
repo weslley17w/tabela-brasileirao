@@ -14,6 +14,18 @@ public class Jogador extends Funcionario{
 		setPassaporteEuropeu(passaporteEuropeu);
 	}
 	
+	public int getQntGols() {
+		return qntGols;
+	}
+
+	public void setQntGols(int qntGols) {
+		this.qntGols = qntGols;
+	}
+
+	public void setPassaporteEuropeu(boolean passaporteEuropeu) {
+		this.passaporteEuropeu = passaporteEuropeu;
+	}
+
 	public void gol() {
 		
 		this.qntGols++;
