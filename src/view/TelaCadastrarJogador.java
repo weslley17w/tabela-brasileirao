@@ -8,8 +8,8 @@ import javax.swing.*;
 
 public class TelaCadastrarJogador implements ActionListener {
 	
-	private static JFrame janela = new JFrame("Cadastrar Tecnico");
-	private static JLabel titulo = new JLabel("Cadastrar Tecnico");
+	private static JFrame janela = new JFrame("Cadastrar Jogador");
+	private static JLabel titulo = new JLabel("Cadastrar Jogador");
 
 
 	

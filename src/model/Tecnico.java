@@ -2,7 +2,7 @@ package model;
 
 import java.util.UUID;
 
-public class Tecnico extends Funcionario {
+public class Tecnico extends Funcionario{
 	boolean licencaCBF;
 	boolean licencaInternacional;
 	int qntVitorias;

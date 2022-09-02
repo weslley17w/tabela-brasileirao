@@ -18,16 +18,22 @@ public class TelaAdmin implements ActionListener{
 	private static JButton btnAtualizarTecnico = new JButton("Atualizar");
 	private static JButton btnCadastrarTecnico = new JButton("Cadastrar");
 	private static JButton btnEditarTecnico = new JButton("Editar");
+	private static JButton btnAtualizarJogador = new JButton("Atualizar");
+	private static JButton btnCadastrarJogador = new JButton("Cadastrar");
+	private static JButton btnEditarJogador = new JButton("Editar");
 	private static JLabel tituloTimes = new JLabel("Times");
 	private JTable tabelaTimes = new JTable();
 	private JTable tabelaTecnicos = new JTable();
+	private JTable tabelaJogador = new JTable();
 	private static controller.Times contorllerTimes = new controller.Times();
 	private static controller.Tecnico contorllerTecnico = new controller.Tecnico();
+	private static controller.Jogador contorllerJogador = new controller.Jogador();
 
 	public TelaAdmin() {
 		frame.setTitle("Jogadores");
 		tabbedPane.addTab("Times", times());
 		tabbedPane.addTab("Técnicos", tecnicos());
+		tabbedPane.addTab("Jogador", jogador());
 		frame.add(tabbedPane);
 		frame.setResizable(false);
 		frame.setVisible(true);
@@ -136,13 +142,17 @@ public class TelaAdmin implements ActionListener{
 			colunauuid.setMaxWidth(0);
 		}
 		
+		if(src == btnCadastrarJogador) {
+			new TelaCadastrarJogador();
+		}
+		
 			
 
 		
 	}
 
 	public JComponent tecnicos() {
-		JPanel panelTecnicos 	  = new JPanel();
+		JPanel panelTecnicos = new JPanel();
 		panelTecnicos.setLayout(null);
 		this.tabelaTecnicos.setModel(contorllerTecnico.gerarLista());
 		TableColumn colunauuid = this.tabelaTecnicos.getTableHeader().getColumnModel().getColumn(0);
@@ -171,6 +181,41 @@ public class TelaAdmin implements ActionListener{
 		panelTecnicos.add(btnAtualizarTecnico);
 		panelTecnicos.add(btnEditarTecnico);
 		panelTecnicos.add(btnCadastrarTecnico);
+		frame.setVisible(true);
+		tituloTimes.setVisible(true);
+		return panelTecnicos;
+	}
+	
+	public JComponent jogador() {
+		JPanel panelTecnicos = new JPanel();
+		panelTecnicos.setLayout(null);
+		this.tabelaJogador.setModel(contorllerJogador.gerarLista());
+		TableColumn colunauuid = this.tabelaJogador.getTableHeader().getColumnModel().getColumn(0);
+		colunauuid.setPreferredWidth(0);
+		colunauuid.setMinWidth(0);
+		colunauuid.setMaxWidth(0);
+		JLabel tituloJogador  = new JLabel("Jogador");
+		tabelaJogador.setDefaultEditor(Object.class, null);
+		JScrollPane scrollPane = new JScrollPane(tabelaJogador);
+		
+		
+		tituloJogador.setFont(new Font("Calibri", Font.BOLD, 20));
+		tituloJogador.setBounds(250, 20, 100, 25);
+		
+		btnAtualizarJogador.setBounds(446, 20, 91, 28);
+		btnCadastrarJogador.setBounds(446, 370, 91, 28);
+		btnEditarJogador.setBounds(350, 370, 91, 28);
+		tabelaJogador.setFillsViewportHeight(true);
+		scrollPane.setBounds(38, 60, 500, 300);
+		btnCadastrarJogador.addActionListener(this);
+		btnEditarJogador.addActionListener(this);
+		btnAtualizarJogador.addActionListener(this);
+		
+		panelTecnicos.add(tituloJogador);
+		panelTecnicos.add(scrollPane);
+		panelTecnicos.add(btnAtualizarJogador);
+		panelTecnicos.add(btnEditarJogador);
+		panelTecnicos.add(btnCadastrarJogador);
 		frame.setVisible(true);
 		tituloTimes.setVisible(true);
 		return panelTecnicos;

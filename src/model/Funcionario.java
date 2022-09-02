@@ -1,6 +1,6 @@
 package model;
 
-abstract class Funcionario {
+public abstract class Funcionario {
 	private String uuid;
 	private String nome;
 	private String dtNascimento;
@@ -44,5 +44,4 @@ abstract class Funcionario {
 	public void setMulta(float multa) {
 		this.multa = multa;
 	}
-	
 }
