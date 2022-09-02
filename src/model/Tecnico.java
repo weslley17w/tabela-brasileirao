@@ -1,5 +1,7 @@
 package model;
 
+import java.util.UUID;
+
 public class Tecnico extends Funcionario {
 	boolean licencaCBF;
 	boolean licencaInternacional;
@@ -7,16 +9,20 @@ public class Tecnico extends Funcionario {
 	int qntEmpates;
 	int qntDerrotas;
 	
-	public Tecnico(String nome, String nacionalidade,String dtNascimento, Double salario, Double multa, boolean licencaCBF,
-					Boolean licencaInternacional) {
+	public Tecnico(String nome, String nacionalidade,String dtNascimento, float salario, float multa, boolean licencaCBF,
+					Boolean licencaInternacional, int qntVitorias, int qntEmpates, int qntDerrotas) {
 		
+		setUuid(UUID.randomUUID().toString());
 		setNome(nome);
 		setNacionalidade(nacionalidade);
 		setDtNascimento(dtNascimento);
 		setSalario(salario);
 		setMulta(multa);
 		setLicencaCBF(licencaCBF);
-		setLicencaInternacional(licencaCBF);
+		setLicencaInternacional(licencaInternacional);
+		setQntVitorias(qntVitorias);
+		setQntEmpates(qntEmpates);
+		setQntDerrotas(qntDerrotas);
 
 	}
 	
@@ -26,8 +32,22 @@ public class Tecnico extends Funcionario {
 	public int getQntVitorias() {
 		return qntVitorias;
 	}
-
-
+	
+	public int getAproveitamento() {
+		int pontosConquitados = (getQntVitorias() * 3 + getQntEmpates());
+		int pontosPosiveis = (getQntVitorias() + getQntEmpates() + getQntDerrotas()) * 3;
+		int aproveitamento = 0;
+		
+		if(pontosPosiveis != 0) {
+			aproveitamento = (pontosConquitados * 100) / pontosPosiveis; 
+		}
+		
+		return aproveitamento;
+	}
+	
+	public int getQntJogos() {
+		return getQntVitorias() + getQntEmpates() + getQntDerrotas();
+	}
 
 
 	public void setQntVitorias(int qntVitorias) {
