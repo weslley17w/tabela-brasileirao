@@ -82,11 +82,8 @@ public class TelaAdmin implements ActionListener{
 		contorllerTimes.getTimes().forEach(time -> {
 			modeloTabelaTimes.addRow(new Object[] { time.getNome(), time.getPontos() });
 		});
-		
-
+		 
 	}
-	
-	
 	
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
@@ -95,8 +92,6 @@ public class TelaAdmin implements ActionListener{
 			new TelaCadastrarTime();
 		}
 			
-			
-		
 		if(src == btnEditarTime) {
 			
 			int row = tabelaTimes.getSelectedRow();
@@ -108,9 +103,7 @@ public class TelaAdmin implements ActionListener{
 				String time = "erro";
 				System.out.println(time);
 			}
-
-			
-			
+	
 		}
 		
 		if(src == btnEditarTecnico) {
@@ -119,8 +112,6 @@ public class TelaAdmin implements ActionListener{
 				String tecnico = tabelaTecnicos.getModel().getValueAt(row, 0).toString();
 				System.out.println(tecnico);
 				new TelaEditarTecnico(tecnico);
-				
-				//frame.dispose();
 
 			}else {
 				JOptionPane.showMessageDialog(null, "Selecione um tecnico para editar",
@@ -130,7 +121,6 @@ public class TelaAdmin implements ActionListener{
 		
 		if(src == btnCadastrarTecnico) {
 			new TelaCadastrarTecnico();
-			frame.dispose();
 		}
 		
 		if(src == btnAtualizarTecnico) {
@@ -142,12 +132,18 @@ public class TelaAdmin implements ActionListener{
 			colunauuid.setMaxWidth(0);
 		}
 		
+		if(src == btnAtualizarJogador) {
+			frame.repaint();
+			this.tabelaJogador.setModel(contorllerJogador.gerarLista());
+			TableColumn colunauuid = this.tabelaJogador.getTableHeader().getColumnModel().getColumn(0);
+			colunauuid.setPreferredWidth(0);
+			colunauuid.setMinWidth(0);
+			colunauuid.setMaxWidth(0);
+		}
+		
 		if(src == btnCadastrarJogador) {
 			new TelaCadastrarJogador();
 		}
-		
-			
-
 		
 	}
 

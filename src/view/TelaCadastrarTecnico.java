@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class TelaCadastrarTecnico implements ActionListener {
-
+	private boolean trava;
 	private static JFrame janela = new JFrame("Cadastrar Tecnico");
 	private static JLabel titulo = new JLabel("Cadastrar Tecnico");
 	private static String[] dataSelect = { "Sim", "Não" };
@@ -23,7 +23,7 @@ public class TelaCadastrarTecnico implements ActionListener {
 	private static JTextField inputQntDerrotas = new JTextField();
 
 	public TelaCadastrarTecnico() {
-
+		this.trava = false;
 		janela.setLayout(null);
 		tela();
 
@@ -118,39 +118,44 @@ public class TelaCadastrarTecnico implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 
-		if (src == btnCadastrarTecnico) {
-			int cadTecnico = controleTecnico.Cadastrar(inputNome.getText(), inputdataNas.getText(),
-					inputNacionalidade.getText(), inputSalario.getText(), inputMulta.getText(),
-					inputLicencacbf.getSelectedItem().toString(),
-					inputLicencaInternacional.getSelectedItem().toString(), inputQntVitorias.getText(),
-					inputQntEmpates.getText(), inputQntDerrotas.getText());
-			if (cadTecnico == 0) {
-				cadTecnico = -1;
-				JOptionPane.showMessageDialog(null, "tecnico cadastrado com sucesso",
-						"Tecnico cadastro", JOptionPane.INFORMATION_MESSAGE);
-						janela.dispose();
-			}
-			
-			if (cadTecnico == 2) {
-				cadTecnico = -1;
-				JOptionPane.showMessageDialog(null, "Todos os campos são de preenchimento obrigatório!",
-						"Campos obrigatórios", JOptionPane.WARNING_MESSAGE);
-			}
-			
-			if (cadTecnico == 3) {
-				cadTecnico = -1;
-				JOptionPane.showMessageDialog(null, "Os campos Salário e Multa devem ser um número real separado por um ponto",
-						"Dados Inválidos", JOptionPane.WARNING_MESSAGE);	
-			}
-			
-			if (cadTecnico == 4) {
-				cadTecnico = -1;
-				JOptionPane.showMessageDialog(null, "Os campos Qnt. vitorias, empates e derrotas devem ser um inteiro",
-						"Dados Inválidos", JOptionPane.WARNING_MESSAGE);	
-			}
+		if (!this.trava) {
+			if (src == btnCadastrarTecnico) {
+				int cadTecnico = controleTecnico.Cadastrar(inputNome.getText(), inputdataNas.getText(),
+						inputNacionalidade.getText(), inputSalario.getText(), inputMulta.getText(),
+						inputLicencacbf.getSelectedItem().toString(),
+						inputLicencaInternacional.getSelectedItem().toString(), inputQntVitorias.getText(),
+						inputQntEmpates.getText(), inputQntDerrotas.getText());
 
+				if (cadTecnico == 0) {
+					this.trava = true;
+					cadTecnico = -1;
+					JOptionPane.showMessageDialog(null, "tecnico cadastrado com sucesso", "Tecnico cadastro",
+							JOptionPane.INFORMATION_MESSAGE);
+					janela.dispose();
+				}
+
+				if (cadTecnico == 2) {
+					cadTecnico = -1;
+					JOptionPane.showMessageDialog(null, "Todos os campos são de preenchimento obrigatório!",
+							"Campos obrigatórios", JOptionPane.WARNING_MESSAGE);
+				}
+
+				if (cadTecnico == 3) {
+					cadTecnico = -1;
+					JOptionPane.showMessageDialog(null,
+							"Os campos Salário e Multa devem ser um número real separado por um ponto",
+							"Dados Inválidos", JOptionPane.WARNING_MESSAGE);
+				}
+
+				if (cadTecnico == 4) {
+					cadTecnico = -1;
+					JOptionPane.showMessageDialog(null,
+							"Os campos Qnt. vitorias, empates e derrotas devem ser um inteiro", "Dados Inválidos",
+							JOptionPane.WARNING_MESSAGE);
+				}
+
+			}
 		}
-		
 
 	}
 }

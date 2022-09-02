@@ -64,6 +64,10 @@ public class Database {
 	public void adicionarTecnico(Tecnico tecnico) {
 		tecnicos.add(tecnico);
 	}
+	
+	public void adicionarJogador(Jogador jogador) {
+		jogadores.add(jogador);
+	}
 
 	private Database() {}
 	
