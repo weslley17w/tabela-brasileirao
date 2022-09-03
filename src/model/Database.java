@@ -115,6 +115,20 @@ public class Database {
 	public ArrayList<Time> getTimes() {
 		return times;
 	}
+	
+	public Time getTime(String id) {
+		Time saida = null;
+		for (Time time : times) {
+
+			if (time.getUuid() == id) {
+				saida = time;
+				break;
+			}
+		}
+		
+		return saida;
+
+	}
 
 	public void adicionarTime(Time time) {
 		times.add(time);

@@ -9,31 +9,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.UUID;
 
-public class TelaAdmin implements ActionListener{
+public class TelaAdmin{
 
-	JTabbedPane tabbedPane = new JTabbedPane();
-	JFrame frame = new JFrame();
-	private static JButton btnCadastrarTime = new JButton("Cadastrar");
-	private static JButton btnEditarTime = new JButton("Editar");
-	private static JButton btnAtualizarTecnico = new JButton("Atualizar");
-	private static JButton btnCadastrarTecnico = new JButton("Cadastrar");
-	private static JButton btnEditarTecnico = new JButton("Editar");
-	private static JButton btnAtualizarJogador = new JButton("Atualizar");
-	private static JButton btnCadastrarJogador = new JButton("Cadastrar");
-	private static JButton btnEditarJogador = new JButton("Editar");
-	private static JLabel tituloTimes = new JLabel("Times");
-	private JTable tabelaTimes = new JTable();
-	private JTable tabelaTecnicos = new JTable();
-	private JTable tabelaJogador = new JTable();
-	private static controller.Times contorllerTimes = new controller.Times();
-	private static controller.Tecnico contorllerTecnico = new controller.Tecnico();
-	private static controller.Jogador contorllerJogador = new controller.Jogador();
+	private JTabbedPane tabbedPane = new JTabbedPane();
+	private JFrame frame = new JFrame();
+	private static view.adminPanels.Times time = new view.adminPanels.Times();
+	private static view.adminPanels.Tecnicos tecnicos = new view.adminPanels.Tecnicos();
+	private static view.adminPanels.Jogador jogadores = new view.adminPanels.Jogador();
 
 	public TelaAdmin() {
 		frame.setTitle("Jogadores");
-		tabbedPane.addTab("Times", times());
-		tabbedPane.addTab("Técnicos", tecnicos());
-		tabbedPane.addTab("Jogador", jogador());
+		tabbedPane.addTab("Times", time.pane());
+		tabbedPane.addTab("Técnicos", tecnicos.pane());
+		tabbedPane.addTab("Jogador", jogadores.pane());
 		frame.add(tabbedPane);
 		frame.setResizable(false);
 		frame.setVisible(true);
@@ -41,189 +29,5 @@ public class TelaAdmin implements ActionListener{
 		frame.setLocationRelativeTo(null);
 		frame.setMinimumSize(new Dimension(frame.getWidth(), frame.getHeight()));
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-	}
-
-	public JComponent times() {
-		JPanel panelTime = new JPanel();
-		panelTime.setLayout(null);
-		dadosTabela();
-		tabelaTimes.setDefaultEditor(Object.class, null);
-		JScrollPane scrollPane = new JScrollPane(tabelaTimes);
-		
-		//Config
-		tituloTimes.setFont(new Font("Calibri", Font.BOLD, 20));
-		tituloTimes.setBounds(260, 20, 50, 25);
-		btnCadastrarTime.setBounds(446, 370, 91, 28);
-		btnEditarTime.setBounds(350, 370, 91, 28);
-		tabelaTimes.setFillsViewportHeight(true);
-		scrollPane.setBounds(38, 60, 500, 300);
-		btnCadastrarTime.addActionListener(this);
-		btnEditarTime.addActionListener(this);
-		
-
-		//Add Screen
-		
-		panelTime.add(tituloTimes);
-		panelTime.add(scrollPane);
-		panelTime.add(btnEditarTime);
-		panelTime.add(btnCadastrarTime);
-		frame.setVisible(true);
-		tituloTimes.setVisible(true);
-		
-		return panelTime;
-	}
-
-	private void dadosTabela() {
-		DefaultTableModel modeloTabelaTimes = new DefaultTableModel();
-		this.tabelaTimes.setModel(modeloTabelaTimes);
-		
-		modeloTabelaTimes.addColumn("TIMES");
-		modeloTabelaTimes.addColumn("PONTOS");
-		contorllerTimes.getTimes().forEach(time -> {
-			modeloTabelaTimes.addRow(new Object[] { time.getNome(), time.getPontos() });
-		});
-		 
-	}
-	
-	public void actionPerformed(ActionEvent e) {
-		Object src = e.getSource();
-		
-		if(src == btnCadastrarTime) {
-			new TelaCadastrarTime();
-		}
-			
-		if(src == btnEditarTime) {
-			
-			int row = tabelaTimes.getSelectedRow();
-			
-			if(row != -1) {
-				String time = tabelaTimes.getModel().getValueAt(row, 0).toString();
-				System.out.println(row);
-			}else {
-				String time = "erro";
-				System.out.println(time);
-			}
-	
-		}
-		
-		if(src == btnEditarTecnico) {
-			int row = tabelaTecnicos.getSelectedRow();
-			if(row >= 0) {
-				String tecnico = tabelaTecnicos.getModel().getValueAt(row, 0).toString();
-				new TelaEditarTecnico(tecnico);
-
-			}else {
-				JOptionPane.showMessageDialog(null, "Selecione um tecnico para editar",
-						"Selecione um tecnico", JOptionPane.WARNING_MESSAGE);	
-			}
-		}
-		
-		if(src == btnCadastrarTecnico) {
-			new TelaCadastrarTecnico();
-		}
-		
-		if(src == btnAtualizarTecnico) {
-			frame.repaint();
-			this.tabelaTecnicos.setModel(contorllerTecnico.gerarLista());
-			TableColumn colunauuid = this.tabelaTecnicos.getTableHeader().getColumnModel().getColumn(0);
-			colunauuid.setPreferredWidth(0);
-			colunauuid.setMinWidth(0);
-			colunauuid.setMaxWidth(0);
-		}
-		
-		if(src == btnAtualizarJogador) {
-			frame.repaint();
-			this.tabelaJogador.setModel(contorllerJogador.gerarLista());
-			TableColumn colunauuid = this.tabelaJogador.getTableHeader().getColumnModel().getColumn(0);
-			colunauuid.setPreferredWidth(0);
-			colunauuid.setMinWidth(0);
-			colunauuid.setMaxWidth(0);
-		}
-		
-		if(src == btnCadastrarJogador) {
-			new TelaCadastrarJogador();
-		}
-		
-		if(src == btnEditarJogador) {
-			int row = tabelaJogador.getSelectedRow();
-			String jogador = tabelaJogador.getModel().getValueAt(0, 0).toString();
-			if(row >= 0) {
-				new TelaEditarJogador(jogador);
-			}else {
-				JOptionPane.showMessageDialog(null, "Selecione um jogador para poder editar",
-						"Selecione um jogador", JOptionPane.WARNING_MESSAGE);	
-			}
-		}
-		
-	}
-
-	public JComponent tecnicos() {
-		JPanel panelTecnicos = new JPanel();
-		panelTecnicos.setLayout(null);
-		this.tabelaTecnicos.setModel(contorllerTecnico.gerarLista());
-		TableColumn colunauuid = this.tabelaTecnicos.getTableHeader().getColumnModel().getColumn(0);
-		colunauuid.setPreferredWidth(0);
-		colunauuid.setMinWidth(0);
-		colunauuid.setMaxWidth(0);
-		JLabel tituloTecnico  = new JLabel("Técnicos");
-		tabelaTecnicos.setDefaultEditor(Object.class, null);
-		JScrollPane scrollPane = new JScrollPane(tabelaTecnicos);
-		
-		
-		tituloTecnico.setFont(new Font("Calibri", Font.BOLD, 20));
-		tituloTecnico.setBounds(250, 20, 80, 25);
-		
-		btnAtualizarTecnico.setBounds(446, 20, 91, 28);
-		btnCadastrarTecnico.setBounds(446, 370, 91, 28);
-		btnEditarTecnico.setBounds(350, 370, 91, 28);
-		tabelaTecnicos.setFillsViewportHeight(true);
-		scrollPane.setBounds(38, 60, 500, 300);
-		btnCadastrarTecnico.addActionListener(this);
-		btnEditarTecnico.addActionListener(this);
-		btnAtualizarTecnico.addActionListener(this);
-		
-		panelTecnicos.add(tituloTecnico);
-		panelTecnicos.add(scrollPane);
-		panelTecnicos.add(btnAtualizarTecnico);
-		panelTecnicos.add(btnEditarTecnico);
-		panelTecnicos.add(btnCadastrarTecnico);
-		frame.setVisible(true);
-		tituloTimes.setVisible(true);
-		return panelTecnicos;
-	}
-	
-	public JComponent jogador() {
-		JPanel panelTecnicos = new JPanel();
-		panelTecnicos.setLayout(null);
-		this.tabelaJogador.setModel(contorllerJogador.gerarLista());
-		TableColumn colunauuid = this.tabelaJogador.getTableHeader().getColumnModel().getColumn(0);
-		colunauuid.setPreferredWidth(0);
-		colunauuid.setMinWidth(0);
-		colunauuid.setMaxWidth(0);
-		JLabel tituloJogador  = new JLabel("Jogador");
-		tabelaJogador.setDefaultEditor(Object.class, null);
-		JScrollPane scrollPane = new JScrollPane(tabelaJogador);
-		
-		
-		tituloJogador.setFont(new Font("Calibri", Font.BOLD, 20));
-		tituloJogador.setBounds(250, 20, 100, 25);
-		
-		btnAtualizarJogador.setBounds(446, 20, 91, 28);
-		btnCadastrarJogador.setBounds(446, 370, 91, 28);
-		btnEditarJogador.setBounds(350, 370, 91, 28);
-		tabelaJogador.setFillsViewportHeight(true);
-		scrollPane.setBounds(38, 60, 500, 300);
-		btnCadastrarJogador.addActionListener(this);
-		btnEditarJogador.addActionListener(this);
-		btnAtualizarJogador.addActionListener(this);
-		
-		panelTecnicos.add(tituloJogador);
-		panelTecnicos.add(scrollPane);
-		panelTecnicos.add(btnAtualizarJogador);
-		panelTecnicos.add(btnEditarJogador);
-		panelTecnicos.add(btnCadastrarJogador);
-		frame.setVisible(true);
-		tituloTimes.setVisible(true);
-		return panelTecnicos;
-	}
+	}	
 }

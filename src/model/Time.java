@@ -1,10 +1,11 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.UUID;
 
 
 public class Time {
+	private String uuid;
 	private String nome;
 	private String tecnico;
 	ArrayList<String> jogadores;
@@ -14,9 +15,17 @@ public class Time {
 	private int qntDerrotas = 0;
 	private int qntGolsFeitos = 0;
 	private int qntGolsSofridos = 0;
-	
-	
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
 	public Time(String nome, int qntJogos, int qntVitorias, int qntEmpates, int qntDerrotas, int qntGolsFeitos, int qntGolsSofridos) {
+		setUuid(UUID.randomUUID().toString());
 		this.setNome(nome);
 		this.setQntJogos(qntJogos);
 		this.setQntVitorias(qntVitorias);
