@@ -3,25 +3,32 @@ package view.adminPanels;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 import view.TelaCadastrarTime;
 import view.TelaEditarTime;
 
 public class Times implements ActionListener{
 	
+	private static controller.Time controlerTime = new controller.Time();
 	private JTable tabelaTimes = new JTable();
 	private static JLabel tituloTimes = new JLabel("Times");
 	private static JButton btnCadastrarTime = new JButton("Cadastrar");
 	private static JButton btnEditarTime = new JButton("Editar");
-	private static controller.Times contorllerTimes = new controller.Times();
+
 	
 	public JComponent pane() {
 		JPanel panelTime = new JPanel();
 		panelTime.setLayout(null);
-		dadosTabela();
+
+		this.tabelaTimes.setModel(controlerTime.dadosTabela());
+		TableColumn colunauuid = this.tabelaTimes.getTableHeader().getColumnModel().getColumn(0);
+		colunauuid.setPreferredWidth(0);
+		colunauuid.setMinWidth(0);
+		colunauuid.setMaxWidth(0);
 		tabelaTimes.setDefaultEditor(Object.class, null);
 		JScrollPane scrollPane = new JScrollPane(tabelaTimes);
 		
@@ -46,18 +53,6 @@ public class Times implements ActionListener{
 		return panelTime;
 	}
 	
-	private void dadosTabela() {
-		DefaultTableModel modeloTabelaTimes = new DefaultTableModel();
-		this.tabelaTimes.setModel(modeloTabelaTimes);
-		
-		modeloTabelaTimes.addColumn("TIMES");
-		modeloTabelaTimes.addColumn("PONTOS");
-		contorllerTimes.getTimes().forEach(time -> {
-			modeloTabelaTimes.addRow(new Object[] { time.getNome(), time.getPontos() });
-		});
-		 
-	}
-	
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 		
@@ -69,12 +64,12 @@ public class Times implements ActionListener{
 			
 			int row = tabelaTimes.getSelectedRow();
 			
-			if(row != -1) {
+			if(row > -1) {
 				String id = tabelaTimes.getModel().getValueAt(row, 0).toString();
 				new TelaEditarTime(id);
 			}else {
-				String time = "erro";
-				System.out.println(time);
+				JOptionPane.showMessageDialog(null, "Selecione um time para poder editar",
+						"Selecione um time", JOptionPane.WARNING_MESSAGE);
 			}
 	
 		}

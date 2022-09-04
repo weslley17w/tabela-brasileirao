@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import javax.swing.table.DefaultTableModel;
 
 public class Jogador {
@@ -10,9 +12,13 @@ public class Jogador {
 	private float   multa;
 	private int     qntGols;
 	private model.Database db = model.Database.getInstance();
+	
+	public ArrayList<model.Jogador> getJogadores() {
+		return this.db.getJogadores();  
+	}
 
 	public DefaultTableModel gerarLista() {
-		this.db.ordenarTecnico("ASC");
+		this.db.ordenarJogadores("ASC");
 		DefaultTableModel modeloTabelaJogador = new DefaultTableModel();
 		modeloTabelaJogador.addColumn("UUID");
 		modeloTabelaJogador.addColumn("NOME");
@@ -26,7 +32,7 @@ public class Jogador {
 		return modeloTabelaJogador;
 	}
 	
-	public int Cadastrar(String nome, String nacionalidade,String dtNascimento, String salario, String multa, String qntGols, String passaporteEuropeu) {
+	public int cadastrar(String nome, String nacionalidade,String dtNascimento, String salario, String multa, String qntGols, String passaporteEuropeu) {
 		int saida = 0;
 
 
@@ -65,7 +71,7 @@ public class Jogador {
 		return saida;
 	}
 	
-	public int Editar(String id, String nome, String nacionalidade,String dtNascimento, String salario, String multa, String qntGols, String passaporteEuropeu) {
+	public int editar(String id, String nome, String nacionalidade,String dtNascimento, String salario, String multa, String qntGols, String passaporteEuropeu) {
 		int saida = 0;
 
 
@@ -100,6 +106,53 @@ public class Jogador {
 		
 		
 
+		return saida;
+	}
+	
+	public DefaultTableModel tabelaJogadoresPorTime(String timeid) {
+		this.db.ordenarJogadores("ASC");
+		DefaultTableModel modeloTabelaTimes = new DefaultTableModel();
+		
+		modeloTabelaTimes.addColumn("UUID");
+		if(timeid == null) {
+			modeloTabelaTimes.addColumn("JOGADORES SEM TIME");
+		}else {
+			modeloTabelaTimes.addColumn("JOGADORES DO TIME");
+		}
+		
+		getJogadores().forEach(jogador -> {
+			if(jogador.getTime() == timeid) {
+				modeloTabelaTimes.addRow(new Object[] { jogador.getUuid(), jogador.getNome()});
+			}
+		});
+		
+		return modeloTabelaTimes; 
+		 
+	}
+	
+	public int contratrar(String jogadorId, String timeId) {
+		int saida = 0;
+		model.Jogador jogador = db.getJogador(jogadorId);
+		
+		if(jogador.getTime() != null) {
+			saida = 1;
+		}else {
+			jogador.setTime(timeId);
+		}
+		
+		return saida;
+	}
+	
+	public int demitir(String jogadorId, String timeId) {
+		int saida = 0;
+		model.Jogador jogador = db.getJogador(jogadorId);
+		
+		if(jogador.getTime() == timeId) {
+			jogador.setTime(null);			
+		}else {
+			saida = 1;
+		}
+		
 		return saida;
 	}
 

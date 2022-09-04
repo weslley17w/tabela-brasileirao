@@ -2,6 +2,7 @@ package model;
 
 public abstract class Funcionario {
 	private String uuid;
+	private String time;
 	private String nome;
 	private String dtNascimento;
 	private String nacionalidade;
@@ -44,4 +45,11 @@ public abstract class Funcionario {
 	public void setMulta(float multa) {
 		this.multa = multa;
 	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
+	
 }

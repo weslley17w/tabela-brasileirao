@@ -9,6 +9,7 @@ public class Jogador extends Funcionario{
 	
 	public Jogador(String nome, String nacionalidade,String dtNascimento, float salario, float multa, int qntGols, boolean passaporteEuropeu) {
 		setUuid(UUID.randomUUID().toString());
+		setTime(null);
 		setNome(nome);
 		setNacionalidade(nacionalidade);
 		setDtNascimento(dtNascimento);

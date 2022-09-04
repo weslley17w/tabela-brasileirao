@@ -30,6 +30,7 @@ public class TelaEditarTecnico implements ActionListener {
 	private static JTextField inputQntDerrotas = new JTextField();
 
 	public TelaEditarTecnico(String id) {
+		this.trava = false;
 		tecnico = db.getTecnico(id);
 		janela.setLayout(null);
 		tela();
@@ -138,6 +139,7 @@ public class TelaEditarTecnico implements ActionListener {
 						inputMulta.getText(), inputLicencacbf.getSelectedItem().toString(),
 						inputLicencaInternacional.getSelectedItem().toString(), inputQntVitorias.getText(),
 						inputQntEmpates.getText(), inputQntDerrotas.getText());
+				
 				if (cadTecnico == 0) {
 					this.trava = true;
 					cadTecnico = -1;

@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.table.DefaultTableModel;
 
 public class Tecnico {
@@ -116,6 +119,18 @@ public class Tecnico {
 		}
 
 		return saida;
+	}
+	
+	public String[] allNomesTecnicosSemtime() {
+		ArrayList<String> nomes = new ArrayList<String>();
+		nomes.add("Sem Técnico");
+		for (model.Tecnico tecnico : db.getTecnicos()) {
+			if(tecnico.getTime() == null) {
+				nomes.add(tecnico.getNome());
+			}
+		}
+		String[] strings = nomes.stream().toArray(String[]::new);
+		return strings;
 	}
 
 }

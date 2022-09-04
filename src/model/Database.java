@@ -92,6 +92,28 @@ public class Database {
 		return saida;
 
 	}
+	
+	public Time updateTime(String timeid, String nome, int qntJogos, int qntVitorias, 
+			int qntEmpates, int qntDerrotas, int qntGolsFeitos, int qntGolsSofridos) {
+		Time saida = null;
+		for (Time time : times) {
+
+			if (time.getUuid() == timeid) {
+				time.setNome(nome);
+				time.setQntJogos(qntJogos);
+				time.setQntVitorias(qntVitorias);
+				time.setQntEmpates(qntEmpates);
+				time.setQntDerrotas(qntDerrotas);
+				time.setQntGolsFeitos(qntGolsFeitos);
+				time.setQntGolsSofridos(qntGolsSofridos);
+				saida = time;
+				break;
+			}
+
+		}
+
+		return saida;
+	}
 
 	public void adicionarTecnico(Tecnico tecnico) {
 		tecnicos.add(tecnico);
@@ -151,6 +173,20 @@ public class Database {
 			tecnicos.sort(Comparator.comparing(Tecnico::getAproveitamento).reversed());
 		}
 	}
+	
+	public void ordenarJogadores() {
+		jogadores.sort(Comparator.comparing(Jogador::getQntGols).reversed());	
+	}
+
+	public void ordenarJogadores(String order) {
+		if (order == "ASC") {
+			jogadores.sort(Comparator.comparing(Jogador::getNome));
+		} else if (order == "DESC") {
+			jogadores.sort(Comparator.comparing(Jogador::getNome).reversed());
+		} else {
+			jogadores.sort(Comparator.comparing(Jogador::getQntGols).reversed());
+		}
+	}
 
 	public void ordenarTecnico() {
 		tecnicos.sort(Comparator.comparing(Tecnico::getQntJogos).reversed());
@@ -171,7 +207,7 @@ public class Database {
 	public void init() {
 
 		model.Jogador cano = new Jogador("Cano", "Argentino", "xx/xx/xxxx", 500000f, 300000000f, 13, false);
-		model.Jogador raul = new Jogador("Predo Raul", "Brasileiro", "xx/xx/xxxx", 50000f, 300000f, 12, true);
+		model.Jogador raul = new Jogador("Pedro Raul", "Brasileiro", "xx/xx/xxxx", 50000f, 300000f, 12, true);
 		model.Jogador bissoli = new Jogador("Bissoli", "Brasileiro", "xx/xx/xxxx", 50000f, 300000f, 11, false);
 		model.Jogador calleri = new Jogador("Calleri", "Argentino", "xx/xx/xxxx", 50000f, 300000f, 11, false);
 

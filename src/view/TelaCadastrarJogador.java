@@ -99,7 +99,7 @@ public class TelaCadastrarJogador implements ActionListener {
 		if (!this.trava) {
 			if (src == btnCadastrarJogagor) {
 				
-				int cadJogador = controleJogador.Cadastrar(inputNome.getText(), inputNacionalidade.getText(),
+				int cadJogador = controleJogador.cadastrar(inputNome.getText(), inputNacionalidade.getText(),
 						inputdataNas.getText(), inputSalario.getText(), inputMulta.getText(), inputQntGols.getText(),
 						inputPassaporteEuropeu.getSelectedItem().toString());
 

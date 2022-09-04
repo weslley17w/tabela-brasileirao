@@ -108,7 +108,7 @@ public class TelaEditarJogador implements ActionListener {
 		if (!this.trava) {
 			if (src == btnEditarJogagor) {
 				
-				int cadJogador = controleJogador.Editar(this.jogador.getUuid(),inputNome.getText(), inputNacionalidade.getText(),
+				int cadJogador = controleJogador.editar(this.jogador.getUuid(),inputNome.getText(), inputNacionalidade.getText(),
 						inputdataNas.getText(), inputSalario.getText(), inputMulta.getText(), inputQntGols.getText(),
 						inputPassaporteEuropeu.getSelectedItem().toString());
 
