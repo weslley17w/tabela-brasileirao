@@ -1,50 +1,44 @@
 package controller;
+
 import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
 
-import model.Tecnico;
-
 public class Time {
-	
+
 	private model.Database db = model.Database.getInstance();
-	private int saida = 0;
 	private int qntJogosInt;
 	private int qntVitoriasInt;
 	private int qntEmpatesInt;
 	private int qntDerrotasInt;
 	private int qntGolsFeitosInt;
 	private int qntGolsSofridosInt;
-	private String idTecnicoAtual;
 	private String idTecnicoNovo;
-	
+
 	public ArrayList<model.Time> getTimes() {
 		this.db.ordenarTabela("ASC");
-		return this.db.getTimes();  
+		return this.db.getTimes();
 	}
-	
+
 	public DefaultTableModel dadosTabela() {
 		DefaultTableModel modeloTabelaTimes = new DefaultTableModel();
-		
-		modeloTabelaTimes.addColumn("UUID");
+
 		modeloTabelaTimes.addColumn("TIMES");
 		modeloTabelaTimes.addColumn("PONTOS");
 		getTimes().forEach(time -> {
-			modeloTabelaTimes.addRow(new Object[] { time.getUuid(), time.getNome(), time.getPontos() });
+			modeloTabelaTimes.addRow(new Object[] { time.getNome(), time.getPontos() });
 		});
-		
-		return modeloTabelaTimes; 
-		 
-	}
-	
-	public int editar(String timeid, String nome, String tecnicoAtual,String tecnicoNovo, String qntJogos, String qntVitorias, 
-			String qntEmpates, String qntDerrotas, String qntGolsFeitos, String qntGolsSofridos) {
-		
-		int saida = 0;
-		idTecnicoAtual = (tecnicoAtual != "null") ? null: tecnicoAtual;
-		idTecnicoNovo = (tecnicoAtual != "null") ? null: tecnicoNovo;
 
-		
+		return modeloTabelaTimes;
+
+	}
+
+	public int editar(model.Time timeid, String nome, String tecnicoNovo, String qntJogos, String qntVitorias,
+			String qntEmpates, String qntDerrotas, String qntGolsFeitos, String qntGolsSofridos) {
+
+		int saida = 0;
+		this.idTecnicoNovo = (tecnicoNovo == "Sem Técnico") ? null : tecnicoNovo;
+
 		try {
 			qntJogosInt = Integer.parseInt(qntJogos);
 			qntVitoriasInt = Integer.parseInt(qntVitorias);
@@ -56,28 +50,51 @@ public class Time {
 			saida = 1;
 		}
 
-		
 		if (nome.isEmpty() || qntJogos.isEmpty() || qntVitorias.isEmpty() || qntEmpates.isEmpty()
 				|| qntDerrotas.isEmpty() || qntGolsFeitos.isEmpty() || qntGolsSofridos.isEmpty()) {
 			saida = 2;
 		}
-		
-		
 
 		if (saida == 0) {
-			model.Time time = db.updateTime(timeid, nome, qntJogosInt, qntVitoriasInt, 
-					qntEmpatesInt, qntDerrotasInt, qntGolsFeitosInt, qntGolsSofridosInt);
-			
-			if(idTecnicoAtual != idTecnicoNovo) {
-				model.Tecnico tecnicoAntigo = db.getTecnico(idTecnicoAtual);
-				tecnicoAntigo.setTime(null);
-				time.setTecnico(tecnicoNovo);
+			timeid.update(nome, qntJogosInt, qntVitoriasInt, qntEmpatesInt, qntDerrotasInt, qntGolsFeitosInt,
+					qntGolsSofridosInt);
+
+			if (timeid.verificarTecnico()) {
+				if(this.idTecnicoNovo != null) {
+					timeid.getTecnico().setTime(null);
+					timeid.setTecnico(null);
+					model.Tecnico tecnico = db.getTecnico(this.idTecnicoNovo);
+					tecnico.setTime(nome);
+					timeid.setTecnico(tecnico);
+				}
+				
+			} else {
+				if (this.idTecnicoNovo != null) {
+					model.Tecnico tecnico = db.getTecnico(this.idTecnicoNovo);
+					tecnico.setTime(nome);
+					timeid.setTecnico(tecnico);
+				}
 			}
 		}
-		
-		
 
 		return saida;
 	}
-	
+
+	public int contrato(String nome, model.Time time) {
+
+		model.Jogador jogador = db.getJogador(nome);
+		jogador.setTime(time.getNome());
+		time.contratarJogador(jogador);
+
+		return 0;
+	}
+
+	public int demitir(String nomeJogador, model.Time time) {
+		int saida = 0;
+		model.Jogador jogador = db.getJogador(nomeJogador);
+		jogador.setTime(null);
+		time.dimitirJogador(jogador);
+		return saida;
+	}
+
 }

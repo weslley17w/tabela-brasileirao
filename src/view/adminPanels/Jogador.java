@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.TableColumn;
 
 import view.TelaCadastrarJogador;
 import view.TelaEditarJogador;
@@ -19,19 +18,16 @@ import view.TelaEditarJogador;
 public class Jogador implements ActionListener{
 	
 	private JTable tabelaJogador = new JTable();
-	private static controller.Jogador contorllerJogador = new controller.Jogador();
-	private static JButton btnAtualizarJogador = new JButton("Atualizar");
-	private static JButton btnCadastrarJogador = new JButton("Cadastrar");
-	private static JButton btnEditarJogador = new JButton("Editar");
+	private controller.Jogador contorllerJogador = new controller.Jogador();
+	private JButton btnAtualizarJogador = new JButton("Atualizar");
+	private JButton btnCadastrarJogador = new JButton("Cadastrar");
+	private JButton btnEditarJogador = new JButton("Editar");
+	private JButton btnDeletarJogador = new JButton("Deletar");
 	
 	public JComponent pane() {
-		JPanel panelTecnicos = new JPanel();
-		panelTecnicos.setLayout(null);
+		JPanel panelJogadores = new JPanel();
+		panelJogadores.setLayout(null);
 		this.tabelaJogador.setModel(contorllerJogador.gerarLista());
-		TableColumn colunauuid = this.tabelaJogador.getTableHeader().getColumnModel().getColumn(0);
-		colunauuid.setPreferredWidth(0);
-		colunauuid.setMinWidth(0);
-		colunauuid.setMaxWidth(0);
 		JLabel tituloJogador  = new JLabel("Jogador");
 		tabelaJogador.setDefaultEditor(Object.class, null);
 		JScrollPane scrollPane = new JScrollPane(tabelaJogador);
@@ -42,20 +38,23 @@ public class Jogador implements ActionListener{
 		
 		btnAtualizarJogador.setBounds(446, 20, 91, 28);
 		btnCadastrarJogador.setBounds(446, 370, 91, 28);
+		btnDeletarJogador.setBounds(253, 370, 91, 28);
 		btnEditarJogador.setBounds(350, 370, 91, 28);
 		tabelaJogador.setFillsViewportHeight(true);
 		scrollPane.setBounds(38, 60, 500, 300);
 		btnCadastrarJogador.addActionListener(this);
 		btnEditarJogador.addActionListener(this);
 		btnAtualizarJogador.addActionListener(this);
+		btnDeletarJogador.addActionListener(this);
 		
-		panelTecnicos.add(tituloJogador);
-		panelTecnicos.add(scrollPane);
-		panelTecnicos.add(btnAtualizarJogador);
-		panelTecnicos.add(btnEditarJogador);
-		panelTecnicos.add(btnCadastrarJogador);
+		panelJogadores.add(tituloJogador);
+		panelJogadores.add(scrollPane);
+		panelJogadores.add(btnDeletarJogador);
+		panelJogadores.add(btnAtualizarJogador);
+		panelJogadores.add(btnEditarJogador);
+		panelJogadores.add(btnCadastrarJogador);
 		
-		return panelTecnicos;
+		return panelJogadores;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -63,20 +62,29 @@ public class Jogador implements ActionListener{
 		
 		if(src == btnAtualizarJogador) {
 			this.tabelaJogador.setModel(contorllerJogador.gerarLista());
-			TableColumn colunauuid = this.tabelaJogador.getTableHeader().getColumnModel().getColumn(0);
-			colunauuid.setPreferredWidth(0);
-			colunauuid.setMinWidth(0);
-			colunauuid.setMaxWidth(0);
 		}
 		
 		if(src == btnCadastrarJogador) {
 			new TelaCadastrarJogador();
 		}
 		
+		if(src == btnDeletarJogador) {
+			int row = tabelaJogador.getSelectedRow();
+			if(row >= 0) {
+				String jogador = tabelaJogador.getModel().getValueAt(row, 0).toString();
+				System.out.println(jogador);
+				
+			}else {
+				JOptionPane.showMessageDialog(null, "Selecione um jogador para poder excluir",
+						"Selecione um jogador", JOptionPane.WARNING_MESSAGE);	
+			}
+			
+		}
+		
 		if(src == btnEditarJogador) {
 			int row = tabelaJogador.getSelectedRow();
-			String jogador = tabelaJogador.getModel().getValueAt(0, 0).toString();
 			if(row >= 0) {
+				String jogador = tabelaJogador.getModel().getValueAt(row, 0).toString();
 				new TelaEditarJogador(jogador);
 			}else {
 				JOptionPane.showMessageDialog(null, "Selecione um jogador para poder editar",

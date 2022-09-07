@@ -7,9 +7,9 @@ public class TelaAdmin{
 
 	private JTabbedPane tabbedPane = new JTabbedPane();
 	private JFrame frame = new JFrame();
-	private static view.adminPanels.Times time = new view.adminPanels.Times();
-	private static view.adminPanels.Tecnicos tecnicos = new view.adminPanels.Tecnicos();
-	private static view.adminPanels.Jogador jogadores = new view.adminPanels.Jogador();
+	private view.adminPanels.Times time = new view.adminPanels.Times();
+	private view.adminPanels.Tecnicos tecnicos = new view.adminPanels.Tecnicos();
+	private view.adminPanels.Jogador jogadores = new view.adminPanels.Jogador();
 
 	public TelaAdmin() {
 		frame.setTitle("Jogadores");

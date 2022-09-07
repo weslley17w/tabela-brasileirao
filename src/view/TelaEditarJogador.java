@@ -4,29 +4,25 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import model.Database;
-
 public class TelaEditarJogador implements ActionListener {
-	
-	private boolean trava;
+
 	private model.Database db = model.Database.getInstance();
 	private model.Jogador jogador;
-	private static JFrame janela = new JFrame("Editar Jogador");
-	private static JLabel titulo = new JLabel("Editar Jogador");
-	private static JTextField inputNome = new JTextField();
-	private static JTextField inputdataNas = new JTextField();
-	private static JTextField inputNacionalidade = new JTextField();
-	private static JTextField inputSalario = new JTextField();
-	private static JTextField inputMulta = new JTextField();
-	private static JTextField inputQntGols = new JTextField();
-	private static String[] dataSelect = { "Sim", "Não" };
-	private static JComboBox<String> inputPassaporteEuropeu = new JComboBox<String>(dataSelect);
-	private static JButton btnEditarJogagor = new JButton("Editar");
-	private static controller.Jogador controleJogador = new controller.Jogador();
+	private JFrame janela = new JFrame("Editar Jogador");
+	private JLabel titulo = new JLabel("Editar Jogador");
+	private JTextField inputNome = new JTextField();
+	private JTextField inputdataNas = new JTextField();
+	private JTextField inputNacionalidade = new JTextField();
+	private JTextField inputSalario = new JTextField();
+	private JTextField inputMulta = new JTextField();
+	private JTextField inputQntGols = new JTextField();
+	private String[] dataSelect = { "Sim", "Não" };
+	private JComboBox<String> inputPassaporteEuropeu = new JComboBox<String>(dataSelect);
+	private JButton btnEditarJogagor = new JButton("Editar");
+	private controller.Jogador controleJogador = new controller.Jogador();
 
-	public TelaEditarJogador(String uuid) {
-		this.jogador = this.db.getJogador(uuid);
-		this.trava = false;
+	public TelaEditarJogador(String nome) {
+		this.jogador = this.db.getJogador(nome);
 		janela.setLayout(null);
 		tela();
 
@@ -74,7 +70,7 @@ public class TelaEditarJogador implements ActionListener {
 		inputQntGols.setBounds(140, 215, 180, 20);
 		String gols = Integer.toString(this.jogador.getQntGols());
 		inputQntGols.setText(gols);
-
+		
 		passaporteEuropeu.setBounds(10, 240, 120, 30);
 		inputPassaporteEuropeu.setBounds(140, 245, 180, 20);
 		String stingPassaporteEuropeu = (this.jogador.getPassaporteEuropeu()) ? "Sim" : "Não";
@@ -103,40 +99,35 @@ public class TelaEditarJogador implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
-		
 
-		if (!this.trava) {
-			if (src == btnEditarJogagor) {
-				
-				int cadJogador = controleJogador.editar(this.jogador.getUuid(),inputNome.getText(), inputNacionalidade.getText(),
-						inputdataNas.getText(), inputSalario.getText(), inputMulta.getText(), inputQntGols.getText(),
-						inputPassaporteEuropeu.getSelectedItem().toString());
+		if (src == btnEditarJogagor) {
+			int cadJogador = controleJogador.editar(this.jogador, inputNome.getText(), inputNacionalidade.getText(),
+					inputdataNas.getText(), inputSalario.getText(), inputMulta.getText(), inputQntGols.getText(),
+					inputPassaporteEuropeu.getSelectedItem().toString());
 
-				if (cadJogador == 0) {
-					this.trava = true;
-					JOptionPane.showMessageDialog(null, "Jogador editado com sucesso", "Jogador Cadastrado",
-							JOptionPane.INFORMATION_MESSAGE);
-					janela.dispose();
-				}
+			if (cadJogador == 0) {
+				JOptionPane.showMessageDialog(null, "Jogagador Editado com sucesso!",
+						"Jogagador Editado", JOptionPane.INFORMATION_MESSAGE);
+				janela.dispose();
+			}
 
-				if (cadJogador == 2) {
-					cadJogador = -1;
-					JOptionPane.showMessageDialog(null, "Todos os campos são de preenchimento obrigatório!",
-							"Campos obrigatórios", JOptionPane.WARNING_MESSAGE);
-				}
+			if (cadJogador == 2) {
+				cadJogador = -1;
+				JOptionPane.showMessageDialog(null, "Todos os campos são de preenchimento obrigatório!",
+						"Campos obrigatórios", JOptionPane.WARNING_MESSAGE);
+			}
 
-				if (cadJogador == 3) {
-					cadJogador = -1;
-					JOptionPane.showMessageDialog(null,
-							"Os campos Salário e Multa devem ser um número real separado por um ponto",
-							"Dados Inválidos", JOptionPane.WARNING_MESSAGE);
-				}
+			if (cadJogador == 3) {
+				cadJogador = -1;
+				JOptionPane.showMessageDialog(null,
+						"Os campos Salário e Multa devem ser um número real separado por um ponto", "Dados Inválidos",
+						JOptionPane.WARNING_MESSAGE);
+			}
 
-				if (cadJogador == 4) {
-					cadJogador = -1;
-					JOptionPane.showMessageDialog(null, "O campos Qnt. Gols deve ser um inteiro", "Dados Inválidos",
-							JOptionPane.WARNING_MESSAGE);
-				}
+			if (cadJogador == 4) {
+				cadJogador = -1;
+				JOptionPane.showMessageDialog(null, "O campos Qnt. Gols deve ser um inteiro", "Dados Inválidos",
+						JOptionPane.WARNING_MESSAGE);
 			}
 		}
 	}

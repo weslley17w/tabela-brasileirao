@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -20,19 +19,18 @@ public class Tecnico {
 	public DefaultTableModel gerarLista() {
 		this.db.ordenarTecnico("ASC");
 		DefaultTableModel modeloTabelaTecnicos = new DefaultTableModel();
-		modeloTabelaTecnicos.addColumn("UUID");
 		modeloTabelaTecnicos.addColumn("NOME");
 		modeloTabelaTecnicos.addColumn("APROVEITAMENTO");
 
 		db.getTecnicos().forEach(tecnico -> {
 			modeloTabelaTecnicos
-					.addRow(new Object[] { tecnico.getUuid(), tecnico.getNome(), tecnico.getAproveitamento() + "%" });
+					.addRow(new Object[] {tecnico.getNome(), tecnico.getAproveitamento() + "%" });
 		});
 
 		return modeloTabelaTecnicos;
 	}
 
-	public int Cadastrar(String nome, String dataNas, String nacionalidade, String salario, String multa,
+	public int cadastrar(String nome, String dataNas, String nacionalidade, String salario, String multa,
 			String licencaCBF, String licencaInternacional, String qntVitorias, String qntEmpates, String qntDerrotas) {
 		int saida = 0;
 
@@ -77,7 +75,7 @@ public class Tecnico {
 		return saida;
 	}
 
-	public int Editar(String id, String nome, String dataNas, String nacionalidade, String salario, String multa,
+	public int update(model.Tecnico tecnico, String nome, String dataNas, String nacionalidade, String salario, String multa,
 			String licencaCBF, String licencaInternacional, String qntVitorias, String qntEmpates, String qntDerrotas) {
 		int saida = 0;
 
@@ -114,20 +112,23 @@ public class Tecnico {
 		}
 
 		if (saida == 0) {
-			this.db.updateTecnico(id, nome, nacionalidade, dataNas, this.salario, this.multa, this.licencaCBF,
+			tecnico.update(nome, nacionalidade, dataNas, this.salario, this.multa, this.licencaCBF,
 					this.licencaInternacional, this.qntVitorias, this.qntEmpates,this.qntDerrotas);
 		}
 
 		return saida;
 	}
 	
-	public String[] allNomesTecnicosSemtime() {
+	public String[] allNomesTecnicosSemtime(model.Time time) {
 		ArrayList<String> nomes = new ArrayList<String>();
 		nomes.add("Sem Técnico");
 		for (model.Tecnico tecnico : db.getTecnicos()) {
 			if(tecnico.getTime() == null) {
 				nomes.add(tecnico.getNome());
 			}
+		}
+		if(time.verificarTecnico()) {
+			nomes.add(time.getTecnico().getNome());
 		}
 		String[] strings = nomes.stream().toArray(String[]::new);
 		return strings;

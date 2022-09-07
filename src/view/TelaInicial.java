@@ -9,8 +9,8 @@ import model.Database;
 
 public class TelaInicial implements ActionListener {
 	
-	private static JFrame janela = new JFrame("Tabela Brasileirão Série A");
-	private static JLabel titulo = new JLabel("Menu Principal");
+	private JFrame janela = new JFrame("Tabela Brasileirão Série A");
+	private JLabel titulo = new JLabel("Menu Principal");
 	private static JButton tabela = new JButton("Tabela");
 	private static JButton admin = new JButton("Admin");
 

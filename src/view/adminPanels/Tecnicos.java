@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.TableColumn;
 
 import view.TelaCadastrarTecnico;
 import view.TelaEditarTecnico;
@@ -23,33 +22,33 @@ public class Tecnicos implements ActionListener {
 	private static JButton btnAtualizarTecnico = new JButton("Atualizar");
 	private static JButton btnCadastrarTecnico = new JButton("Cadastrar");
 	private static JButton btnEditarTecnico = new JButton("Editar");
+	private JButton btnDeletarTecnico = new JButton("Deletar");
 
 	public JComponent pane() {
 		JPanel panelTecnicos = new JPanel();
 		panelTecnicos.setLayout(null);
 		this.tabelaTecnicos.setModel(contorllerTecnico.gerarLista());
-		TableColumn colunauuid = this.tabelaTecnicos.getTableHeader().getColumnModel().getColumn(0);
-		colunauuid.setPreferredWidth(0);
-		colunauuid.setMinWidth(0);
-		colunauuid.setMaxWidth(0);
 		JLabel tituloTecnico = new JLabel("Técnicos");
 		tabelaTecnicos.setDefaultEditor(Object.class, null);
 		JScrollPane scrollPane = new JScrollPane(tabelaTecnicos);
 
 		tituloTecnico.setFont(new Font("Calibri", Font.BOLD, 20));
 		tituloTecnico.setBounds(250, 20, 80, 25);
-
+		
+		btnDeletarTecnico.setBounds(253, 370, 91, 28);
 		btnAtualizarTecnico.setBounds(446, 20, 91, 28);
 		btnCadastrarTecnico.setBounds(446, 370, 91, 28);
 		btnEditarTecnico.setBounds(350, 370, 91, 28);
 		tabelaTecnicos.setFillsViewportHeight(true);
 		scrollPane.setBounds(38, 60, 500, 300);
+		btnDeletarTecnico.addActionListener(this);
 		btnCadastrarTecnico.addActionListener(this);
 		btnEditarTecnico.addActionListener(this);
 		btnAtualizarTecnico.addActionListener(this);
 
 		panelTecnicos.add(tituloTecnico);
 		panelTecnicos.add(scrollPane);
+		panelTecnicos.add(btnDeletarTecnico);
 		panelTecnicos.add(btnAtualizarTecnico);
 		panelTecnicos.add(btnEditarTecnico);
 		panelTecnicos.add(btnCadastrarTecnico);
@@ -58,9 +57,23 @@ public class Tecnicos implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
-
+		
+		if(src == btnDeletarTecnico) {
+			int row = tabelaTecnicos.getSelectedRow();
+			if(row >= 0) {
+				String tecnico = tabelaTecnicos.getModel().getValueAt(row, 0).toString();
+				System.out.println(tecnico);
+				
+			}else {
+				JOptionPane.showMessageDialog(null, "Selecione um tecnico para poder excluir",
+						"Selecione um tecnico", JOptionPane.WARNING_MESSAGE);	
+			}
+			
+		}
+		
 		if (src == btnEditarTecnico) {
 			int row = tabelaTecnicos.getSelectedRow();
+			
 			if (row >= 0) {
 				String tecnico = tabelaTecnicos.getModel().getValueAt(row, 0).toString();
 				new TelaEditarTecnico(tecnico);
@@ -77,10 +90,6 @@ public class Tecnicos implements ActionListener {
 
 		if (src == btnAtualizarTecnico) {
 			this.tabelaTecnicos.setModel(contorllerTecnico.gerarLista());
-			TableColumn colunauuid = this.tabelaTecnicos.getTableHeader().getColumnModel().getColumn(0);
-			colunauuid.setPreferredWidth(0);
-			colunauuid.setMinWidth(0);
-			colunauuid.setMaxWidth(0);
 		}
 
 	}

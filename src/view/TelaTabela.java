@@ -8,40 +8,39 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class TelaTabela extends JFrame {
+public class TelaTabela{
 
-	private static final long serialVersionUID = -5547498367822791169L;
+	private JFrame janela = new JFrame("Tabela Brasileirão Série A");
 	private JLabel titulo = new JLabel("BRASILEIRÃO SÉRIE A");
 	private JTable tabelaBrasileirao = new JTable();
 	private int contador;
 
 	public TelaTabela() {
-		setTitle("Tabela Brasileirão Série A");
-		setResizable(false);
-		setVisible(true);
-		setSize(800, 700);
-		setLayout(null);
+		janela.setResizable(false);
+		janela.setVisible(true);
+		janela.setSize(800, 700);
+		janela.setLayout(null);
 		titulo.setFont(new Font("Calibri", Font.BOLD, 20));
 		titulo.setBounds(290, 20, 175, 30);
 		titulo.setVisible(true);
 
 		this.Tabela();
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		janela.setLocationRelativeTo(null);
+		janela.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
 	private void Tabela() {
 
 		this.dadosTabela();
-		add(titulo);
+		janela.add(titulo);
 		tabelaBrasileirao.setDefaultEditor(Object.class, null);
 		tabelaBrasileirao.setBounds(0, 50, 500, 500);
 		JScrollPane scrollPane = new JScrollPane(tabelaBrasileirao);
 		tabelaBrasileirao.setFillsViewportHeight(true);
 		scrollPane.setBounds(0, 50, 800, 800);
-		add(scrollPane);
+		janela.add(scrollPane);
 
-		setVisible(true);
+		janela.setVisible(true);
 
 	}
 

@@ -5,25 +5,23 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class TelaCadastrarTecnico implements ActionListener {
-	private boolean trava;
-	private static JFrame janela = new JFrame("Cadastrar Tecnico");
-	private static JLabel titulo = new JLabel("Cadastrar Tecnico");
-	private static String[] dataSelect = { "Sim", "Não" };
+	private JFrame janela = new JFrame("Cadastrar Tecnico");
+	private JLabel titulo = new JLabel("Cadastrar Tecnico");
+	private String[] dataSelect = { "Sim", "Não" };
 	private controller.Tecnico controleTecnico = new controller.Tecnico();
-	private static JButton btnCadastrarTecnico = new JButton("Cadastrar");
-	private static JTextField inputNome = new JTextField();
-	private static JTextField inputdataNas = new JTextField();
-	private static JTextField inputNacionalidade = new JTextField();
-	private static JTextField inputSalario = new JTextField();
-	private static JTextField inputMulta = new JTextField();
-	private static JComboBox<String> inputLicencacbf = new JComboBox<String>(dataSelect);
-	private static JComboBox<String> inputLicencaInternacional = new JComboBox<String>(dataSelect);
-	private static JTextField inputQntVitorias = new JTextField();
-	private static JTextField inputQntEmpates = new JTextField();
-	private static JTextField inputQntDerrotas = new JTextField();
+	private JButton btnCadastrarTecnico = new JButton("Cadastrar");
+	private JTextField inputNome = new JTextField();
+	private JTextField inputdataNas = new JTextField();
+	private JTextField inputNacionalidade = new JTextField();
+	private JTextField inputSalario = new JTextField();
+	private JTextField inputMulta = new JTextField();
+	private JComboBox<String> inputLicencacbf = new JComboBox<String>(dataSelect);
+	private JComboBox<String> inputLicencaInternacional = new JComboBox<String>(dataSelect);
+	private JTextField inputQntVitorias = new JTextField();
+	private JTextField inputQntEmpates = new JTextField();
+	private JTextField inputQntDerrotas = new JTextField();
 
 	public TelaCadastrarTecnico() {
-		this.trava = false;
 		janela.setLayout(null);
 		tela();
 
@@ -52,23 +50,18 @@ public class TelaCadastrarTecnico implements ActionListener {
 
 		nome.setBounds(10, 60, 40, 30);
 		inputNome.setBounds(140, 65, 180, 20);
-		inputNome.setText(null);
 
 		dataNas.setBounds(10, 90, 120, 30);
 		inputdataNas.setBounds(140, 95, 180, 20);
-		inputdataNas.setText(null);
 
 		nacionalidade.setBounds(10, 120, 120, 30);
 		inputNacionalidade.setBounds(140, 125, 180, 20);
-		inputNacionalidade.setText(null);
 
 		salario.setBounds(10, 150, 120, 30);
 		inputSalario.setBounds(140, 155, 180, 20);
-		inputSalario.setText(null);
 
 		multa.setBounds(10, 180, 120, 30);
 		inputMulta.setBounds(140, 185, 180, 20);
-		inputMulta.setText(null);
 
 		licencacbf.setBounds(10, 210, 120, 30);
 		inputLicencacbf.setBounds(140, 215, 180, 20);
@@ -78,15 +71,12 @@ public class TelaCadastrarTecnico implements ActionListener {
 
 		qntVitorias.setBounds(10, 270, 120, 30);
 		inputQntVitorias.setBounds(140, 275, 180, 20);
-		inputQntVitorias.setText(null);
 
 		qntEmpates.setBounds(10, 300, 120, 30);
 		inputQntEmpates.setBounds(140, 305, 180, 20);
-		inputQntEmpates.setText(null);
 
 		qntDerrotas.setBounds(10, 330, 120, 30);
 		inputQntDerrotas.setBounds(140, 335, 180, 20);
-		inputQntDerrotas.setText(null);
 
 		btnCadastrarTecnico.setBounds(228, 370, 91, 28);
 
@@ -118,16 +108,14 @@ public class TelaCadastrarTecnico implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 
-		if (!this.trava) {
 			if (src == btnCadastrarTecnico) {
-				int cadTecnico = controleTecnico.Cadastrar(inputNome.getText(), inputdataNas.getText(),
+				int cadTecnico = controleTecnico.cadastrar(inputNome.getText(), inputdataNas.getText(),
 						inputNacionalidade.getText(), inputSalario.getText(), inputMulta.getText(),
 						inputLicencacbf.getSelectedItem().toString(),
 						inputLicencaInternacional.getSelectedItem().toString(), inputQntVitorias.getText(),
 						inputQntEmpates.getText(), inputQntDerrotas.getText());
 
 				if (cadTecnico == 0) {
-					this.trava = true;
 					cadTecnico = -1;
 					JOptionPane.showMessageDialog(null, "tecnico cadastrado com sucesso", "Tecnico cadastro",
 							JOptionPane.INFORMATION_MESSAGE);
@@ -156,6 +144,4 @@ public class TelaCadastrarTecnico implements ActionListener {
 
 			}
 		}
-
-	}
 }

@@ -9,26 +9,27 @@ import javax.swing.table.TableColumn;
 public class TelaEditarTime implements ActionListener {
 
 	private boolean trava;
-	private static JFrame janela = new JFrame();
-	private static JLabel titulo = new JLabel();
-	private static JLabel titulo2 = new JLabel("Jogadores");
-	private static JButton btnDemitir = new JButton("=========>");
-	private static JButton btnAtualizar = new JButton();
-	private static JButton btnContratar = new JButton("<=========");
-	private static JButton btnSalvar = new JButton("Salvar");
-	private static model.Database db = model.Database.getInstance();
-	private static model.Time time;
-	private static controller.Jogador controleJogadores = new controller.Jogador();
-	private static controller.Tecnico controleTecnico = new controller.Tecnico();
-	private static controller.Time controleTime = new controller.Time();
-	private static JComboBox<String> inputTecnico;
-	private static JTextField inputNome = new JTextField();
-	private static JTextField inputQntJogos = new JTextField();
-	private static JTextField inputQntVitorias = new JTextField();
-	private static JTextField inputQntEmpates = new JTextField();
-	private static JTextField inputQntDerrotas = new JTextField();
-	private static JTextField inputQntGolsFeitos = new JTextField();
-	private static JTextField inputQntGolsSofridos = new JTextField();
+	private JFrame janela = new JFrame();
+	private JLabel titulo = new JLabel();
+	private JLabel titulo2 = new JLabel("Jogadores");
+	private JButton btnDemitir = new JButton("=========>");
+	private JButton btnAtualizar = new JButton();
+	private JButton btnContratar = new JButton("<=========");
+	private JButton btnSalvar = new JButton("Salvar");
+	private model.Database db = model.Database.getInstance();
+	private model.Time time;
+	private controller.Jogador controleJogadores = new controller.Jogador();
+	private controller.Tecnico controleTecnico = new controller.Tecnico();
+	private controller.Time controleTime = new controller.Time();
+	private String[] nomesTecnicos;
+	private JComboBox<String> inputTecnico;
+	private JTextField inputNome = new JTextField();
+	private JTextField inputQntJogos = new JTextField();
+	private JTextField inputQntVitorias = new JTextField();
+	private JTextField inputQntEmpates = new JTextField();
+	private JTextField inputQntDerrotas = new JTextField();
+	private JTextField inputQntGolsFeitos = new JTextField();
+	private JTextField inputQntGolsSofridos = new JTextField();
 	private JTable jogadoresDotime = new JTable();
 	private JTable jogadoresSemtime = new JTable();
 
@@ -36,11 +37,11 @@ public class TelaEditarTime implements ActionListener {
 
 	public TelaEditarTime(String id) {
 		this.trava = false;
-		TelaEditarTime.time = db.getTime(id);
+		this.time = db.getTime(id);
 		janela.setTitle(time.getNome());
 		btnAtualizar.addActionListener(this);
 		btnAtualizar.doClick();
-		titulo.setText(TelaEditarTime.time.getNome());
+		titulo.setText(this.time.getNome());
 		titulo.setFont(new Font("Arial", Font.BOLD, 20));
 		titulo.setBounds(200, 10, 150, 30);
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -64,9 +65,11 @@ public class TelaEditarTime implements ActionListener {
 
 		JLabel tecnico = new JLabel("Tecnico:");
 		tecnico.setBounds(290, 60, 60, 30);
-		String[] nomesTecnicos = controleTecnico.allNomesTecnicosSemtime();
-		String idTecnico = time.getTecnico();
-		String nomeTecnico = (idTecnico != "null") ? "Sem Técnico" : db.getTecnico(idTecnico).getNome();
+		janela.revalidate();
+		janela.dispose();
+
+		String nomeTecnico = (!time.verificarTecnico()) ? "Sem Técnico" : time.getTecnico().getNome();
+		nomesTecnicos = controleTecnico.allNomesTecnicosSemtime(time);
 		inputTecnico = new JComboBox<String>(nomesTecnicos);
 		inputTecnico.setSelectedItem(nomeTecnico);
 		inputTecnico.setBounds(390, 65, 140, 20);
@@ -134,7 +137,7 @@ public class TelaEditarTime implements ActionListener {
 	}
 
 	private void jogadores() {
-		this.jogadoresDotime.setModel(controleJogadores.tabelaJogadoresPorTime(time.getUuid()));
+		this.jogadoresDotime.setModel(controleJogadores.tabelaJogadoresPorTime(time));
 		TableColumn colunauuid = this.jogadoresDotime.getTableHeader().getColumnModel().getColumn(0);
 		colunauuid.setPreferredWidth(0);
 		colunauuid.setMinWidth(0);
@@ -143,10 +146,6 @@ public class TelaEditarTime implements ActionListener {
 		JScrollPane dotime = new JScrollPane(jogadoresDotime);
 
 		this.jogadoresSemtime.setModel(controleJogadores.tabelaJogadoresPorTime(null));
-		TableColumn colunauuid2 = this.jogadoresSemtime.getTableHeader().getColumnModel().getColumn(0);
-		colunauuid2.setPreferredWidth(0);
-		colunauuid2.setMinWidth(0);
-		colunauuid2.setMaxWidth(0);
 		jogadoresSemtime.setDefaultEditor(Object.class, null);
 		JScrollPane semtime = new JScrollPane(jogadoresSemtime);
 
@@ -168,54 +167,46 @@ public class TelaEditarTime implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		Object src = e.getSource();
+		if (!this.trava) {
+			Object src = e.getSource();
 
-		if (src == btnAtualizar) {
-			this.jogadoresDotime.setModel(controleJogadores.tabelaJogadoresPorTime(time.getUuid()));
-			TableColumn colunauuid = this.jogadoresDotime.getTableHeader().getColumnModel().getColumn(0);
-			colunauuid.setPreferredWidth(0);
-			colunauuid.setMinWidth(0);
-			colunauuid.setMaxWidth(0);
+			if (src == btnAtualizar) {
+				this.jogadoresDotime.setModel(controleJogadores.tabelaJogadoresPorTime(time));
 
-			this.jogadoresSemtime.setModel(controleJogadores.tabelaJogadoresPorTime(null));
-			TableColumn colunauuid2 = this.jogadoresSemtime.getTableHeader().getColumnModel().getColumn(0);
-			colunauuid2.setPreferredWidth(0);
-			colunauuid2.setMinWidth(0);
-			colunauuid2.setMaxWidth(0);
-		}
+				this.jogadoresSemtime.setModel(controleJogadores.tabelaJogadoresPorTime(null));
+			}
 
-		if (src == btnContratar) {
-			int row = jogadoresSemtime.getSelectedRow();
-			if (row >= 0) {
-				String jogador = jogadoresSemtime.getModel().getValueAt(row, 0).toString();
-				int validar = controleJogadores.contratrar(jogador, time.getUuid());
+			if (src == btnContratar) {
 
-				if (validar == 0) {
-					btnAtualizar.doClick();
-					JOptionPane.showMessageDialog(null, "Jogador contratado com sucesso", "Jogador Contratado",
-							JOptionPane.INFORMATION_MESSAGE);
-				} else {
-					JOptionPane.showMessageDialog(null, "O jogador tem contrato vigente com outro clube de futebol",
-							"Contrato Vigente", JOptionPane.WARNING_MESSAGE);
+				int row = jogadoresSemtime.getSelectedRow();
+
+				if (row >= 0) {
+					String jogador = jogadoresSemtime.getModel().getValueAt(row, 0).toString();
+					model.Time time = this.time;
+					int validar = controleTime.contrato(jogador, time);
+
+					if (validar == 0) {
+
+						btnAtualizar.doClick();
+						JOptionPane.showMessageDialog(null, "Jogador contratado com sucesso", "Jogador Contratado",
+								JOptionPane.INFORMATION_MESSAGE);
+
+					} else {
+						JOptionPane.showMessageDialog(null, "O jogador tem contrato vigente com outro clube de futebol",
+								"Contrato Vigente", JOptionPane.WARNING_MESSAGE);
+					}
+
 				}
 
-			} else {
-				JOptionPane.showMessageDialog(null, "Selecione um jogador para contratar", "Selecione um jogador",
-						JOptionPane.WARNING_MESSAGE);
 			}
-		}
 
-		if (src == btnSalvar) {
-			if (!this.trava) {
-				int validar = controleTime.editar(time.getUuid(), inputNome.getText(), time.getTecnico(),
-						inputTecnico.getSelectedItem().toString(), inputQntJogos.getText(), inputQntVitorias.getText(),
-						inputQntEmpates.getText(), inputQntDerrotas.getText(), inputQntGolsFeitos.getText(),
-						inputQntGolsSofridos.getText());
-				
+			if (src == btnSalvar) {
+				int validar = controleTime.editar(time, inputNome.getText(), inputTecnico.getSelectedItem().toString(),
+						inputQntJogos.getText(), inputQntVitorias.getText(), inputQntEmpates.getText(),
+						inputQntDerrotas.getText(), inputQntGolsFeitos.getText(), inputQntGolsSofridos.getText());
+
 				if (validar == 0) {
 					this.trava = true;
-					JOptionPane.showMessageDialog(null, "time editado com sucesso", "Time cadastro",
-							JOptionPane.INFORMATION_MESSAGE);
 					janela.dispose();
 				}
 
@@ -227,32 +218,29 @@ public class TelaEditarTime implements ActionListener {
 				if (validar == 1) {
 					JOptionPane.showMessageDialog(null,
 							"Os campos Qnt. Jogos, Qnt. Vitórias, Qnt. Empates, Qnt. Derrotas, Gols Feitos e Gols Sofridos devem "
-							+ "ser um inteiro", "Dados Inválidos",
-							JOptionPane.WARNING_MESSAGE);
+									+ "ser um inteiro",
+							"Dados Inválidos", JOptionPane.WARNING_MESSAGE);
 				}
 			}
-		}
 
-		if (src == btnDemitir) {
-			int row = jogadoresDotime.getSelectedRow();
-			if (row >= 0) {
-				String jogador = jogadoresDotime.getModel().getValueAt(row, 0).toString();
-				int validar = controleJogadores.demitir(jogador, time.getUuid());
+			if (src == btnDemitir) {
+				int row = jogadoresDotime.getSelectedRow();
+				if (row >= 0) {
+					String jogador = jogadoresDotime.getModel().getValueAt(row, 0).toString();
+					int validar = controleTime.demitir(jogador, time);
 
-				if (validar == 0) {
-					btnAtualizar.doClick();
-					JOptionPane.showMessageDialog(null, "Jogador demitido com sucesso", "Jogador Demitido",
-							JOptionPane.INFORMATION_MESSAGE);
-				} else {
-					JOptionPane.showMessageDialog(null, "O jogador não pertence ao seu time", "Contrato Vigente",
-							JOptionPane.WARNING_MESSAGE);
+					if (validar == 0) {
+						btnAtualizar.doClick();
+						JOptionPane.showMessageDialog(null, "Jogador demitido com sucesso", "Jogador Demitido",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(null, "O jogador não pertence ao seu time", "Contrato Vigente",
+								JOptionPane.WARNING_MESSAGE);
+					}
+
 				}
-
-			} else {
-				JOptionPane.showMessageDialog(null, "Selecione um jogador para demitir", "Selecione um jogador",
-						JOptionPane.WARNING_MESSAGE);
 			}
-		}
 
+		}
 	}
 }

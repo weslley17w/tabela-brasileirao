@@ -1,7 +1,5 @@
 package model;
 
-import java.util.UUID;
-
 public class Tecnico extends Funcionario {
 	boolean licencaCBF;
 	boolean licencaInternacional;
@@ -12,7 +10,6 @@ public class Tecnico extends Funcionario {
 	public Tecnico(String nome, String nacionalidade, String dtNascimento, float salario, float multa,
 			boolean licencaCBF, Boolean licencaInternacional, int qntVitorias, int qntEmpates, int qntDerrotas) {
 
-		setUuid(UUID.randomUUID().toString());
 		setTime(null);
 		setNome(nome);
 		setNacionalidade(nacionalidade);
@@ -27,6 +24,23 @@ public class Tecnico extends Funcionario {
 
 	}
 
+	public Tecnico update(String nome, String nacionalidade, String dtNascimento, float salario,
+			float multa, boolean licencaCBF, Boolean licencaInternacional, int qntVitorias, int qntEmpates,
+			int qntDerrotas) {
+
+		this.setNome(nome);
+		this.setNacionalidade(nacionalidade);
+		this.setDtNascimento(dtNascimento);
+		this.setSalario(salario);
+		this.setMulta(multa);
+		this.setLicencaCBF(licencaCBF);
+		this.setLicencaInternacional(licencaInternacional);
+		this.setQntVitorias(qntVitorias);
+		this.setQntEmpates(qntEmpates);
+		this.setQntDerrotas(qntDerrotas);
+
+		return this;
+	}
 
 	public int getQntVitorias() {
 		return qntVitorias;
@@ -83,6 +97,7 @@ public class Tecnico extends Funcionario {
 	public void setLicencaInternacional(boolean licencaInternacional) {
 		this.licencaInternacional = licencaInternacional;
 	}
+	
 
 	public void jogo(int qntVitorias, int qntEmpates, int qntDerrotas) {
 		setQntVitorias(qntVitorias);

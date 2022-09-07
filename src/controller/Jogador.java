@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
-
 import javax.swing.table.DefaultTableModel;
 
 public class Jogador {
@@ -12,21 +10,16 @@ public class Jogador {
 	private float   multa;
 	private int     qntGols;
 	private model.Database db = model.Database.getInstance();
-	
-	public ArrayList<model.Jogador> getJogadores() {
-		return this.db.getJogadores();  
-	}
 
 	public DefaultTableModel gerarLista() {
 		this.db.ordenarJogadores("ASC");
 		DefaultTableModel modeloTabelaJogador = new DefaultTableModel();
-		modeloTabelaJogador.addColumn("UUID");
 		modeloTabelaJogador.addColumn("NOME");
 		modeloTabelaJogador.addColumn("QUANTIDADE DE GOLS");
 
 		db.getJogadores().forEach(jogador -> {
 			modeloTabelaJogador
-					.addRow(new Object[] { jogador.getUuid(), jogador.getNome(), jogador.getQntGols()});
+					.addRow(new Object[] {jogador.getNome(), jogador.getQntGols()});
 		});
 
 		return modeloTabelaJogador;
@@ -71,9 +64,8 @@ public class Jogador {
 		return saida;
 	}
 	
-	public int editar(String id, String nome, String nacionalidade,String dtNascimento, String salario, String multa, String qntGols, String passaporteEuropeu) {
+	public int editar(model.Jogador jogadorname, String nome, String nacionalidade,String dtNascimento, String salario, String multa, String qntGols, String passaporteEuropeu) {
 		int saida = 0;
-
 
 		if (passaporteEuropeu == "Sim") {
 			this.passaporteEuropeu = true;
@@ -101,7 +93,7 @@ public class Jogador {
 		}
 
 		if (saida == 0) {
-			db.updateJogador(id, nome, nacionalidade,dtNascimento, this.salario, this.multa, this.qntGols, this.passaporteEuropeu);
+			jogadorname.update(nome, nacionalidade, dtNascimento, this.salario, this.multa, this.qntGols, this.passaporteEuropeu);
 		}
 		
 		
@@ -109,52 +101,30 @@ public class Jogador {
 		return saida;
 	}
 	
-	public DefaultTableModel tabelaJogadoresPorTime(String timeid) {
+	public DefaultTableModel tabelaJogadoresPorTime(model.Time time) {
 		this.db.ordenarJogadores("ASC");
 		DefaultTableModel modeloTabelaTimes = new DefaultTableModel();
 		
-		modeloTabelaTimes.addColumn("UUID");
-		if(timeid == null) {
+		if(time == null) {
 			modeloTabelaTimes.addColumn("JOGADORES SEM TIME");
+			
+			this.db.getJogadores().forEach(jogador -> {
+				if(jogador.getTime() ==   null) {
+					modeloTabelaTimes.addRow(new Object[] {jogador.getNome()});
+				}
+			});
+			
 		}else {
 			modeloTabelaTimes.addColumn("JOGADORES DO TIME");
+			for(model.Jogador jogador : time.getJogadores()) {
+				modeloTabelaTimes.addRow(new Object[] {jogador.getNome()});
+			}	
 		}
 		
-		getJogadores().forEach(jogador -> {
-			if(jogador.getTime() == timeid) {
-				modeloTabelaTimes.addRow(new Object[] { jogador.getUuid(), jogador.getNome()});
-			}
-		});
+		
 		
 		return modeloTabelaTimes; 
 		 
 	}
-	
-	public int contratrar(String jogadorId, String timeId) {
-		int saida = 0;
-		model.Jogador jogador = db.getJogador(jogadorId);
-		
-		if(jogador.getTime() != null) {
-			saida = 1;
-		}else {
-			jogador.setTime(timeId);
-		}
-		
-		return saida;
-	}
-	
-	public int demitir(String jogadorId, String timeId) {
-		int saida = 0;
-		model.Jogador jogador = db.getJogador(jogadorId);
-		
-		if(jogador.getTime() == timeId) {
-			jogador.setTime(null);			
-		}else {
-			saida = 1;
-		}
-		
-		return saida;
-	}
-
 	
 }

@@ -2,25 +2,22 @@ package view;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 import javax.swing.*;
 
-import model.Database;
-import model.Time;
 
 public class TelaCadastrarTime implements ActionListener {
 
-	private static JFrame janela = new JFrame();
-	private static JLabel titulo = new JLabel();
-	private static JTextField inputNome = new JTextField();
-	private static JComboBox<String> inputTecnico;
-	private static JTextField inputQntJogos = new JTextField();
-	private static JTextField inputQntVitorias = new JTextField();
-	private static JTextField inputQntEmpates = new JTextField();
-	private static JTextField inputQntDerrotas = new JTextField();
-	private static JTextField inputQntGolsFeitos = new JTextField();
-	private static JTextField inputQntGolsSofridos = new JTextField();
+	private JFrame janela = new JFrame();
+	private JLabel titulo = new JLabel();
+	private JTextField inputNome = new JTextField();
+	private JTextField inputQntJogos = new JTextField();
+	private JTextField inputQntVitorias = new JTextField();
+	private JTextField inputQntEmpates = new JTextField();
+	private JTextField inputQntDerrotas = new JTextField();
+	private JTextField inputQntGolsFeitos = new JTextField();
+	private JTextField inputQntGolsSofridos = new JTextField();
+	private JButton    btnEditar = new JButton("Editar");
 	
 
 	public TelaCadastrarTime() {
@@ -33,7 +30,7 @@ public class TelaCadastrarTime implements ActionListener {
 		janela.setLayout(null);
 		janela.add(titulo);
 		label();
-		janela.setSize(560, 600);
+		janela.setSize(560, 290);
 		janela.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		janela.setVisible(true);
 	}
@@ -67,6 +64,9 @@ public class TelaCadastrarTime implements ActionListener {
 		JLabel qntGolsSofridos = new JLabel("Gols Sofridos:");
 		qntGolsSofridos.setBounds(290, 160, 140, 20);
 		inputQntGolsSofridos.setBounds(390, 160, 140, 20);
+		
+		btnEditar.setBounds(440, 210, 91, 28);
+		btnEditar.addActionListener(this);
 				
 		janela.add(nome);
 		janela.add(inputNome);
@@ -83,7 +83,7 @@ public class TelaCadastrarTime implements ActionListener {
 		janela.add(inputQntGolsFeitos);
 		janela.add(qntGolsSofridos);
 		janela.add(inputQntGolsSofridos);
-
+		janela.add(btnEditar);
 		
 	}
 

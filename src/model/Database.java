@@ -17,11 +17,11 @@ public class Database {
 		return tecnicos;
 	}
 
-	public Tecnico getTecnico(String id) {
+	public Tecnico getTecnico(String nome) {
 		Tecnico saida = null;
 		for (Tecnico tecnico : tecnicos) {
 
-			if (tecnico.getUuid() == id) {
+			if (tecnico.getNome() == nome) {
 				saida = tecnico;
 				break;
 			}
@@ -31,36 +31,11 @@ public class Database {
 
 	}
 
-	public Tecnico updateTecnico(String id, String nome, String nacionalidade, String dtNascimento, float salario,
-			float multa, boolean licencaCBF, Boolean licencaInternacional, int qntVitorias, int qntEmpates,
-			int qntDerrotas) {
-		Tecnico saida = null;
-		for (Tecnico tecnico : tecnicos) {
-
-			if (tecnico.getUuid() == id) {
-				tecnico.setNome(nome);
-				tecnico.setNacionalidade(nacionalidade);
-				tecnico.setDtNascimento(dtNascimento);
-				tecnico.setSalario(salario);
-				tecnico.setMulta(multa);
-				tecnico.setLicencaCBF(licencaCBF);
-				tecnico.setLicencaInternacional(licencaInternacional);
-				tecnico.setQntVitorias(qntVitorias);
-				tecnico.setQntEmpates(qntEmpates);
-				tecnico.setQntDerrotas(qntDerrotas);
-				saida = tecnico;
-				break;
-			}
-		}
-
-		return saida;
-	}
-
-	public Jogador getJogador(String id) {
+	public Jogador getJogador(String nome) {
 		Jogador saida = null;
 		for (Jogador jogador : jogadores) {
 
-			if (jogador.getUuid() == id) {
+			if (jogador.getNome() == nome) {
 				saida = jogador;
 				break;
 			}
@@ -68,51 +43,6 @@ public class Database {
 
 		return saida;
 
-	}
-
-	public Jogador updateJogador(String id, String nome, String nacionalidade, String dtNascimento, float salario,
-			float multa, int qntGols, boolean passaporteEuropeu) {
-		Jogador saida = null;
-		for (Jogador jogador : jogadores) {
-
-			if (jogador.getUuid() == id) {
-				jogador.setNome(nome);
-				jogador.setNacionalidade(nacionalidade);
-				jogador.setDtNascimento(dtNascimento);
-				jogador.setSalario(salario);
-				jogador.setMulta(multa);
-				jogador.setQntGols(qntGols);
-				jogador.setPassaporteEuropeu(passaporteEuropeu);
-				saida = jogador;
-				break;
-			}
-
-		}
-
-		return saida;
-
-	}
-	
-	public Time updateTime(String timeid, String nome, int qntJogos, int qntVitorias, 
-			int qntEmpates, int qntDerrotas, int qntGolsFeitos, int qntGolsSofridos) {
-		Time saida = null;
-		for (Time time : times) {
-
-			if (time.getUuid() == timeid) {
-				time.setNome(nome);
-				time.setQntJogos(qntJogos);
-				time.setQntVitorias(qntVitorias);
-				time.setQntEmpates(qntEmpates);
-				time.setQntDerrotas(qntDerrotas);
-				time.setQntGolsFeitos(qntGolsFeitos);
-				time.setQntGolsSofridos(qntGolsSofridos);
-				saida = time;
-				break;
-			}
-
-		}
-
-		return saida;
 	}
 
 	public void adicionarTecnico(Tecnico tecnico) {
@@ -138,11 +68,11 @@ public class Database {
 		return times;
 	}
 	
-	public Time getTime(String id) {
+	public Time getTime(String nome) {
 		Time saida = null;
 		for (Time time : times) {
 
-			if (time.getUuid() == id) {
+			if (time.getNome() == nome) {
 				saida = time;
 				break;
 			}

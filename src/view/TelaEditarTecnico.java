@@ -10,28 +10,26 @@ import model.Tecnico;
 
 public class TelaEditarTecnico implements ActionListener {
 
-	private boolean trava;
 	private model.Database db = Database.getInstance();
 	private model.Tecnico tecnico;
-	private static JFrame janela = new JFrame("Editar Tecnico");
-	private static JLabel titulo = new JLabel("Editar Tecnico");
-	private static String[] dataSelect = { "Sim", "Não" };
+	private JFrame janela = new JFrame("Editar Tecnico");
+	private JLabel titulo = new JLabel("Editar Tecnico");
+	private String[] dataSelect = { "Sim", "Não" };
 	private controller.Tecnico controleTecnico = new controller.Tecnico();
-	private static JButton btnEditarTecnico = new JButton("Editar");
-	private static JTextField inputNome = new JTextField();
-	private static JTextField inputdataNas = new JTextField();
-	private static JTextField inputNacionalidade = new JTextField();
-	private static JTextField inputSalario = new JTextField();
-	private static JTextField inputMulta = new JTextField();
-	private static JComboBox<String> inputLicencacbf = new JComboBox<String>(dataSelect);
-	private static JComboBox<String> inputLicencaInternacional = new JComboBox<String>(dataSelect);
-	private static JTextField inputQntVitorias = new JTextField();
-	private static JTextField inputQntEmpates = new JTextField();
-	private static JTextField inputQntDerrotas = new JTextField();
+	private JButton btnEditarTecnico = new JButton("Editar");
+	private JTextField inputNome = new JTextField();
+	private JTextField inputdataNas = new JTextField();
+	private JTextField inputNacionalidade = new JTextField();
+	private JTextField inputSalario = new JTextField();
+	private JTextField inputMulta = new JTextField();
+	private JComboBox<String> inputLicencacbf = new JComboBox<String>(dataSelect);
+	private JComboBox<String> inputLicencaInternacional = new JComboBox<String>(dataSelect);
+	private JTextField inputQntVitorias = new JTextField();
+	private JTextField inputQntEmpates = new JTextField();
+	private JTextField inputQntDerrotas = new JTextField();
 
-	public TelaEditarTecnico(String id) {
-		this.trava = false;
-		tecnico = db.getTecnico(id);
+	public TelaEditarTecnico(String nome) {
+		tecnico = db.getTecnico(nome);
 		janela.setLayout(null);
 		tela();
 
@@ -132,41 +130,37 @@ public class TelaEditarTecnico implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
-		if (!this.trava) {
-			if (src == btnEditarTecnico) {
-				int cadTecnico = controleTecnico.Editar(this.tecnico.getUuid(), inputNome.getText(),
-						inputdataNas.getText(), inputNacionalidade.getText(), inputSalario.getText(),
-						inputMulta.getText(), inputLicencacbf.getSelectedItem().toString(),
-						inputLicencaInternacional.getSelectedItem().toString(), inputQntVitorias.getText(),
-						inputQntEmpates.getText(), inputQntDerrotas.getText());
-				
-				if (cadTecnico == 0) {
-					this.trava = true;
-					cadTecnico = -1;
-					JOptionPane.showMessageDialog(null, "tecnico editado com sucesso", "Tecnico cadastro",
-							JOptionPane.INFORMATION_MESSAGE);
-					janela.dispose();
-				}
 
-				if (cadTecnico == 2) {
-					cadTecnico = -1;
-					JOptionPane.showMessageDialog(null, "Todos os campos são de preenchimento obrigatório!",
-							"Campos obrigatórios", JOptionPane.WARNING_MESSAGE);
-				}
+		if (src == btnEditarTecnico) {
+			int cadTecnico = controleTecnico.update(this.tecnico, inputNome.getText(), inputdataNas.getText(),
+					inputNacionalidade.getText(), inputSalario.getText(), inputMulta.getText(),
+					inputLicencacbf.getSelectedItem().toString(),
+					inputLicencaInternacional.getSelectedItem().toString(), inputQntVitorias.getText(),
+					inputQntEmpates.getText(), inputQntDerrotas.getText());
 
-				if (cadTecnico == 3) {
-					cadTecnico = -1;
-					JOptionPane.showMessageDialog(null,
-							"Os campos Salário e Multa devem ser um número real separado por um ponto",
-							"Dados Inválidos", JOptionPane.WARNING_MESSAGE);
-				}
+			if (cadTecnico == 0) {
+				JOptionPane.showMessageDialog(null, "Tecnico Editado com sucesso!",
+						"Tecnico Editado", JOptionPane.INFORMATION_MESSAGE);
+				janela.dispose();
+			}
 
-				if (cadTecnico == 4) {
-					cadTecnico = -1;
-					JOptionPane.showMessageDialog(null,
-							"Os campos Qnt. vitorias, empates e derrotas devem ser um inteiro", "Dados Inválidos",
-							JOptionPane.WARNING_MESSAGE);
-				}
+			if (cadTecnico == 2) {
+				cadTecnico = -1;
+				JOptionPane.showMessageDialog(null, "Todos os campos são de preenchimento obrigatório!",
+						"Campos obrigatórios", JOptionPane.WARNING_MESSAGE);
+			}
+
+			if (cadTecnico == 3) {
+				cadTecnico = -1;
+				JOptionPane.showMessageDialog(null,
+						"Os campos Salário e Multa devem ser um número real separado por um ponto", "Dados Inválidos",
+						JOptionPane.WARNING_MESSAGE);
+			}
+
+			if (cadTecnico == 4) {
+				cadTecnico = -1;
+				JOptionPane.showMessageDialog(null, "Os campos Qnt. vitorias, empates e derrotas devem ser um inteiro",
+						"Dados Inválidos", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 

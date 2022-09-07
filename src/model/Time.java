@@ -1,14 +1,11 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.UUID;
-
 
 public class Time {
-	private String uuid;
 	private String nome;
-	private String tecnico;
-	ArrayList<String> jogadores;
+	private Tecnico tecnico;
+	ArrayList<Jogador> jogadores = new ArrayList<>();
 	private int qntJogos = 0;
 	private int qntVitorias = 0;
 	private int qntEmpates = 0;
@@ -16,16 +13,7 @@ public class Time {
 	private int qntGolsFeitos = 0;
 	private int qntGolsSofridos = 0;
 
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	public String getUuid() {
-		return uuid;
-	}
-
 	public Time(String nome, int qntJogos, int qntVitorias, int qntEmpates, int qntDerrotas, int qntGolsFeitos, int qntGolsSofridos) {
-		setUuid(UUID.randomUUID().toString());
 		this.setNome(nome);
 		this.setQntJogos(qntJogos);
 		this.setQntVitorias(qntVitorias);
@@ -35,12 +23,49 @@ public class Time {
 		this.setQntGolsSofridos(qntGolsSofridos);
 	}
 	
-	public String getTecnico() {
-		return tecnico;
+	public Time update(String nome, int qntJogos, int qntVitorias, 
+			int qntEmpates, int qntDerrotas, int qntGolsFeitos, int qntGolsSofridos) {
+		Time saida = null;
+
+				this.setNome(nome);
+				this.setQntJogos(qntJogos);
+				this.setQntVitorias(qntVitorias);
+				this.setQntEmpates(qntEmpates);
+				this.setQntDerrotas(qntDerrotas);
+				this.setQntGolsFeitos(qntGolsFeitos);
+				this.setQntGolsSofridos(qntGolsSofridos);
+				saida = this;
+
+		return saida;
 	}
 
-	public void setTecnico(String tecnico) {
+	public Tecnico getTecnico() {
+		return tecnico;
+	}
+	
+	public boolean verificarTecnico() {
+		boolean saida = true;
+		if(getTecnico() == null) {
+			saida = false;
+		}
+		return saida;
+	}
+	
+	public void contratarJogador(model.Jogador jogador) {
+		jogadores.add(jogador);
+	}
+	
+	public void dimitirJogador(model.Jogador jogador) {
+		jogadores.remove(jogador);
+	}
+
+
+	public void setTecnico(Tecnico tecnico) {
 		this.tecnico = tecnico;
+	}
+
+	public ArrayList<Jogador> getJogadores() {
+		return jogadores;
 	}
 
 	public Time(String nome) {
@@ -113,20 +138,6 @@ public class Time {
 
 	public void gerarArtilheiros(Tecnico tecnico) {
 
-	}
-
-	public void jogo(int golsPro, int golsContra) {
-		this.qntJogos++; 
-		this.qntGolsFeitos   += golsPro;
-		this.qntGolsSofridos += golsContra;
-		
-		if(golsPro > golsContra){
-			qntVitorias++;
-		}else if(golsPro < golsContra){
-			qntDerrotas++;
-		}else {
-			qntEmpates++;
-		}
 	}
 
 	public int getQntJogos() {

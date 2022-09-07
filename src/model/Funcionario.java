@@ -1,7 +1,6 @@
 package model;
 
 public abstract class Funcionario {
-	private String uuid;
 	private String time;
 	private String nome;
 	private String dtNascimento;
@@ -12,15 +11,10 @@ public abstract class Funcionario {
 	public  String getNome() {
 		return nome;
 	}
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getUuid() {
-		return uuid;
-	}
+
 	public String getNacionalidade() {
 		return nacionalidade;
 	}
