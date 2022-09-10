@@ -15,6 +15,13 @@ import javax.swing.JTable;
 import view.TelaCadastrarTecnico;
 import view.TelaEditarTecnico;
 
+/**
+*
+* Responsável por criar o painel com lista de tecnicos
+* @author Weslley Barros
+* @version 1.0
+*/
+
 public class Tecnicos implements ActionListener {
 
 	private JTable tabelaTecnicos = new JTable();
@@ -23,7 +30,15 @@ public class Tecnicos implements ActionListener {
 	private static JButton btnCadastrarTecnico = new JButton("Cadastrar");
 	private static JButton btnEditarTecnico = new JButton("Editar");
 	private JButton btnDeletarTecnico = new JButton("Deletar");
-
+	
+	/**
+	 *
+	 * Responsável por criar e alinhar os elementos da tela
+	 * @author Weslley Barros
+	 * @return JPanel - Retorna um JPanel para outra classe consumir
+	 * @version 1.0
+	 */
+	
 	public JComponent pane() {
 		JPanel panelTecnicos = new JPanel();
 		panelTecnicos.setLayout(null);
@@ -34,7 +49,7 @@ public class Tecnicos implements ActionListener {
 
 		tituloTecnico.setFont(new Font("Calibri", Font.BOLD, 20));
 		tituloTecnico.setBounds(250, 20, 80, 25);
-		
+
 		btnDeletarTecnico.setBounds(253, 370, 91, 28);
 		btnAtualizarTecnico.setBounds(446, 20, 91, 28);
 		btnCadastrarTecnico.setBounds(446, 370, 91, 28);
@@ -54,26 +69,49 @@ public class Tecnicos implements ActionListener {
 		panelTecnicos.add(btnCadastrarTecnico);
 		return panelTecnicos;
 	}
-
+	
+	/**
+	* Responsável por ler os eventos de clique dos botoes da tela
+	* @author  Weslley Barros
+	* @version 1.0
+	*/
+	
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
-		
-		if(src == btnDeletarTecnico) {
+
+		if (src == btnDeletarTecnico) {
 			int row = tabelaTecnicos.getSelectedRow();
-			if(row >= 0) {
+			if (row >= 0) {
 				String tecnico = tabelaTecnicos.getModel().getValueAt(row, 0).toString();
-				System.out.println(tecnico);
-				
-			}else {
-				JOptionPane.showMessageDialog(null, "Selecione um tecnico para poder excluir",
-						"Selecione um tecnico", JOptionPane.WARNING_MESSAGE);	
+
+				int validar = contorllerTecnico.deletar(tecnico);
+
+				if (validar == 1) {
+					JOptionPane.showMessageDialog(null, "Tecnico não encontrado, atualize a página!",
+							"Tecnico não encontrado", JOptionPane.WARNING_MESSAGE);
+				}
+
+				if (validar == 2) {
+					JOptionPane.showMessageDialog(null, "Você não pode excluir Tecnico com contrato vigente",
+							"Tecnico com contrato vigente", JOptionPane.WARNING_MESSAGE);
+				}
+
+				if (validar == 0) {
+					this.tabelaTecnicos.setModel(contorllerTecnico.gerarLista());
+					JOptionPane.showMessageDialog(null, "Tecnico excluído com sucesso", "Tecnico excluído",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+
+			} else {
+				JOptionPane.showMessageDialog(null, "Selecione um tecnico para poder excluir", "Selecione um tecnico",
+						JOptionPane.WARNING_MESSAGE);
 			}
-			
+
 		}
-		
+
 		if (src == btnEditarTecnico) {
 			int row = tabelaTecnicos.getSelectedRow();
-			
+
 			if (row >= 0) {
 				String tecnico = tabelaTecnicos.getModel().getValueAt(row, 0).toString();
 				new TelaEditarTecnico(tecnico);

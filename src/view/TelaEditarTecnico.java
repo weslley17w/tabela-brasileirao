@@ -8,6 +8,14 @@ import javax.swing.*;
 import model.Database;
 import model.Tecnico;
 
+/**
+*
+* Responsável por criar a tela para editar o técnico
+*
+* @author  Weslley Barros
+* @version 1.0
+*/
+
 public class TelaEditarTecnico implements ActionListener {
 
 	private model.Database db = Database.getInstance();
@@ -27,9 +35,17 @@ public class TelaEditarTecnico implements ActionListener {
 	private JTextField inputQntVitorias = new JTextField();
 	private JTextField inputQntEmpates = new JTextField();
 	private JTextField inputQntDerrotas = new JTextField();
-
+	
+	/**
+	*
+	* Responsável por criar a tela para editar o técnico
+	* @param nome - Nome do técnico a ser editado
+	* @author  Weslley Barros
+	* @version 1.0
+	*/
+	
 	public TelaEditarTecnico(String nome) {
-		tecnico = db.getTecnico(nome);
+		tecnico = db.getTecnicos(nome);
 		janela.setLayout(null);
 		tela();
 
@@ -37,7 +53,15 @@ public class TelaEditarTecnico implements ActionListener {
 		janela.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		janela.setVisible(true);
 	}
-
+	
+	/**
+	*
+	* Responsável por criar e alinhar os elementos da tela
+	*
+	* @author  Weslley Barros
+	* @version 1.0
+	*/
+	
 	private void tela() {
 
 		JLabel nome = new JLabel("Nome:");
@@ -127,7 +151,15 @@ public class TelaEditarTecnico implements ActionListener {
 		janela.add(btnEditarTecnico);
 		btnEditarTecnico.addActionListener(this);
 	}
-
+	
+	/**
+	*
+	* Responsável por ler os eventos de clique dos botões da tela
+	*
+	* @author  Weslley Barros
+	* @version 1.0
+	*/
+	
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 
@@ -166,11 +198,4 @@ public class TelaEditarTecnico implements ActionListener {
 
 	}
 
-	public Tecnico getTecnico() {
-		return tecnico;
-	}
-
-	public void setUuid(Tecnico tecnico) {
-		this.tecnico = tecnico;
-	}
 }

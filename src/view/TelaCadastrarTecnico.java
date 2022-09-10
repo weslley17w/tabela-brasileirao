@@ -4,6 +4,14 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+*
+* Responsável por criar a tela para cadastrar o técnico
+*
+* @author  Weslley Barros
+* @version 1.0
+*/
+
 public class TelaCadastrarTecnico implements ActionListener {
 	private JFrame janela = new JFrame("Cadastrar Tecnico");
 	private JLabel titulo = new JLabel("Cadastrar Tecnico");
@@ -20,7 +28,15 @@ public class TelaCadastrarTecnico implements ActionListener {
 	private JTextField inputQntVitorias = new JTextField();
 	private JTextField inputQntEmpates = new JTextField();
 	private JTextField inputQntDerrotas = new JTextField();
-
+	
+	/**
+	*
+	* Responsável por configurar a janela
+	*
+	* @author  Weslley Barros
+	* @version 1.0
+	*/
+	
 	public TelaCadastrarTecnico() {
 		janela.setLayout(null);
 		tela();
@@ -29,7 +45,15 @@ public class TelaCadastrarTecnico implements ActionListener {
 		janela.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		janela.setVisible(true);
 	}
-
+	
+	/**
+	*
+	* Responsável por criar e alinhar os elementos da tela
+	*
+	* @author  Weslley Barros
+	* @version 1.0
+	*/
+	
 	private void tela() {
 
 		JLabel nome = new JLabel("Nome:");
@@ -104,7 +128,15 @@ public class TelaCadastrarTecnico implements ActionListener {
 		janela.add(btnCadastrarTecnico);
 		btnCadastrarTecnico.addActionListener(this);
 	}
-
+	
+	/**
+	*
+	* Responsável por ler os eventos de clique dos botoes da tela
+	*
+	* @author  Weslley Barros
+	* @version 1.0
+	*/
+	
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 

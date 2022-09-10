@@ -4,6 +4,14 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+*
+* Responsável por criar a tela para editar time
+*
+* @author  Weslley Barros
+* @version 1.0
+*/
+
 public class TelaEditarJogador implements ActionListener {
 
 	private model.Database db = model.Database.getInstance();
@@ -20,9 +28,17 @@ public class TelaEditarJogador implements ActionListener {
 	private JComboBox<String> inputPassaporteEuropeu = new JComboBox<String>(dataSelect);
 	private JButton btnEditarJogagor = new JButton("Editar");
 	private controller.Jogador controleJogador = new controller.Jogador();
-
+	
+	/**
+	*
+	* Responsável por criar a tela para editar o jogador
+	* @param nome - Nome do jogador a ser editado
+	* @author  Weslley Barros
+	* @version 1.0
+	*/
+	
 	public TelaEditarJogador(String nome) {
-		this.jogador = this.db.getJogador(nome);
+		this.jogador = this.db.getJogadores(nome);
 		janela.setLayout(null);
 		tela();
 
@@ -30,7 +46,15 @@ public class TelaEditarJogador implements ActionListener {
 		janela.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		janela.setVisible(true);
 	}
-
+	
+	/**
+	*
+	* Responsável por criar e alinhar os elementos da tela
+	*
+	* @author  Weslley Barros
+	* @version 1.0
+	*/
+	
 	private void tela() {
 
 		JLabel nome = new JLabel("Nome:");
@@ -96,7 +120,15 @@ public class TelaEditarJogador implements ActionListener {
 		janela.add(btnEditarJogagor);
 		btnEditarJogagor.addActionListener(this);
 	}
-
+	
+	/**
+	*
+	* Responsável por ler os eventos de clique dos botões da tela
+	*
+	* @author  Weslley Barros
+	* @version 1.0
+	*/
+	
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 

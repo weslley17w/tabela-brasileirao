@@ -5,7 +5,13 @@ import java.awt.event.*;
 import javax.swing.*;
 import model.Database;
 
-
+/**
+*
+* Responsável por criar a tela inicial
+*
+* @author Weslley Barros
+* @version 1.0
+*/
 
 public class TelaInicial implements ActionListener {
 	
@@ -14,6 +20,12 @@ public class TelaInicial implements ActionListener {
 	private static JButton tabela = new JButton("Tabela");
 	private static JButton admin = new JButton("Admin");
 
+	/**
+	 *
+	 * Responsável por criar a tela inicial
+	 * @author Weslley Barros
+	 * @version 1.0
+	 */
 	
 	public TelaInicial() {
 		model.Database db = Database.getInstance();
@@ -35,7 +47,14 @@ public class TelaInicial implements ActionListener {
 		janela.setVisible(true);
 	}
 	
-
+	/**
+	 *
+	 * Responsável por fazer a chamada da tela inicial do sistema
+	 * @param args - args
+	 * @author Weslley Barros
+	 * @version 1.0
+	 */
+	
 	public static void main(String[] args) {
 		TelaInicial menu = new TelaInicial();
 		

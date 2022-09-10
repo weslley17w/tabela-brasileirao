@@ -3,21 +3,67 @@ package model;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+*
+* Classe responsável por gerenciar times, jogadores e técnicos
+*
+* @author  Weslley Barros
+* @version 1.0
+*/
+
 public class Database {
+	
 	private static Database uniqueInstance = new Database();
 	ArrayList<Time> times = new ArrayList<>();
 	ArrayList<Tecnico> tecnicos = new ArrayList<>();
 	ArrayList<Jogador> jogadores = new ArrayList<>();
 
+	
+	private Database() {}
+	
+	/**
+	 * set UniqueInstance
+	 * @author Weslley Barros
+	 * @param uniqueInstance - uniqueInstance
+	 */
+	public static void setUniqueInstance(Database uniqueInstance) {
+		Database.uniqueInstance = uniqueInstance;
+	}
+	
+	/**
+	 * get UniqueInstance
+	 * @author Weslley Barros
+	 * @return uniqueInstance
+	 */
+	public static Database getInstance() {
+		return uniqueInstance;
+	}
+	
+	/**Obter todos jogadores
+	 * @author Weslley Barros
+	 * @return ArrayList - Lista de contendo todos jogadores
+	 */
+	
 	public ArrayList<Jogador> getJogadores() {
 		return jogadores;
 	}
-
+	
+	/**Oobter todos tecnicos
+	 * @author Weslley Barros
+	 * @return ArrayList - Lista de contendo todos técnicos
+	 */
+	
 	public ArrayList<Tecnico> getTecnicos() {
 		return tecnicos;
 	}
-
-	public Tecnico getTecnico(String nome) {
+	
+	/**Obter um tecnico pelo nome
+	 * @author Weslley Barros
+	 * @param nome String - Nome do técnico.
+	 * @return Tecnico - técnico 
+	 */
+	
+	public Tecnico getTecnicos(String nome) {
 		Tecnico saida = null;
 		for (Tecnico tecnico : tecnicos) {
 
@@ -30,8 +76,14 @@ public class Database {
 		return saida;
 
 	}
-
-	public Jogador getJogador(String nome) {
+	
+	/**Obter um jogador pelo nome
+	 * @author Weslley Barros
+	 * @param nome String - Nome do técnico.
+	 * @return Jogador - jogador 
+	 */
+	
+	public Jogador getJogadores(String nome) {
 		Jogador saida = null;
 		for (Jogador jogador : jogadores) {
 
@@ -44,29 +96,83 @@ public class Database {
 		return saida;
 
 	}
+	
+	/**
+	 * Pesquisar um jogador pelo nome
+	 * @author Weslley Barros
+	 * @param nome String - Nome do jogador.
+	 * @return Jogador - jogador
+	 */
+	
+	public ArrayList<Jogador> findJogador(String nome) {
+		ArrayList<Jogador> listPesquisa = new ArrayList<>();
+		this.ordenarJogadores("ASC");
+		
+		for (Jogador jogador : jogadores) {
+			boolean cotains = jogador.getNome().indexOf(nome) !=-1? true: false;
+			if (cotains) {
+				listPesquisa.add(jogador);
+			}
+		}
+		
+		return listPesquisa;
 
+	}
+	
+	/**
+	 * Remove o jogador
+	 * @author Weslley Barros
+	 * @param jogador Jogador - jogador.
+	 */
+	
+	public void removeJogador(model.Jogador jogador) {
+		jogadores.remove(jogador);
+	}
+	
+	/**
+	 * Remove o técnico
+	 * @author Weslley Barros
+	 * @param tecnico Tecnico - tecnico.
+	 */
+	
+	public void removeTecnico(model.Tecnico tecnico) {
+		tecnicos.remove(tecnico);
+	}
+	
+	/**
+	 * Adiciona um técnico
+	 * @author Weslley Barros
+	 * @param tecnico Tecnico - tecnico.
+	 */
+	
 	public void adicionarTecnico(Tecnico tecnico) {
 		tecnicos.add(tecnico);
 	}
-
+	
+	/**
+	 * Adiciona um jogador
+	 * @author Weslley Barros
+	 * @param jogador Jogador - jogador.
+	 */
+	
 	public void adicionarJogador(Jogador jogador) {
 		jogadores.add(jogador);
 	}
-
-	private Database() {
-	}
-
-	public static void setUniqueInstance(Database uniqueInstance) {
-		Database.uniqueInstance = uniqueInstance;
-	}
-
-	public static Database getInstance() {
-		return uniqueInstance;
-	}
-
+	
+	/**Obter todos time
+	 * @author Weslley Barros
+	 * @return ArrayList - times 
+	 */
+	
 	public ArrayList<Time> getTimes() {
 		return times;
 	}
+	
+	/**Obter um time pelo nome
+	 * @author Weslley Barros
+	 * @param nome String - Nome do técnico.
+	 * @return Jogador - jogador 
+	 */
 	
 	public Time getTime(String nome) {
 		Time saida = null;
@@ -79,20 +185,30 @@ public class Database {
 		}
 		
 		return saida;
-
 	}
-
+	
+	/**Adiciona um time
+	 * @author Weslley Barros
+	 * @param time Time - Nome do time.
+	 */
 	public void adicionarTime(Time time) {
 		times.add(time);
 	}
 
+	/**Ordena os times com o seguinte critério: mais pontos, Qnt. de vitórias, Saldo de gols e Qnt de gols feitos.
+	 * @author Weslley Barros
+	 */
 	public void ordenarTabela() {
 		times.sort(Comparator.comparing(Time::getQntGolsFeitos).reversed());
 		times.sort(Comparator.comparing(Time::getSaldoGols).reversed());
 		times.sort(Comparator.comparing(Time::getQntVitorias).reversed());
 		times.sort(Comparator.comparing(Time::getPontos).reversed());
 	}
-
+	
+	/**Ordena os times em ordem alfabética, alfabética-invertida  ou pelo cristeiro do brasileirão
+	 * @author Weslley Barros
+	 * @param order String - ASC = ordem alfabetica e DESC = ordem alfabética-invertida.
+	 */
 	public void ordenarTabela(String order) {
 		if (order == "ASC") {
 			tecnicos.sort(Comparator.comparing(Tecnico::getNome));
@@ -104,10 +220,19 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * Ordena os jogadores em ordem alfabética
+	 * @author Weslley Barros
+	 */
 	public void ordenarJogadores() {
 		jogadores.sort(Comparator.comparing(Jogador::getQntGols).reversed());	
 	}
-
+	
+	/**
+	 * Ordena os jogadores em ordem alfabética ou alfabética-invertida 
+	 * @author Weslley Barros
+	 * @param order String - ASC = ordem alfabetica e DESC = ordem alfabética-invertida.
+	 */
 	public void ordenarJogadores(String order) {
 		if (order == "ASC") {
 			jogadores.sort(Comparator.comparing(Jogador::getNome));
@@ -117,12 +242,22 @@ public class Database {
 			jogadores.sort(Comparator.comparing(Jogador::getQntGols).reversed());
 		}
 	}
-
+	
+	/**
+	 * Ordena os tecnicos em ordem alfabética
+	 * @author Weslley Barros
+	 */
+	
 	public void ordenarTecnico() {
 		tecnicos.sort(Comparator.comparing(Tecnico::getQntJogos).reversed());
 		tecnicos.sort(Comparator.comparing(Tecnico::getAproveitamento).reversed());
 	}
-
+	
+	/**
+	 * Ordena os tecnicos em ordem alfabética ou alfabética-invertida 
+	 * @author Weslley Barros
+	 * @param order String - ASC = ordem alfabetica e DESC = ordem alfabética-invertida.
+	 */
 	public void ordenarTecnico(String order) {
 		if (order == "ASC") {
 			times.sort(Comparator.comparing(Time::getNome));
@@ -133,7 +268,13 @@ public class Database {
 			tecnicos.sort(Comparator.comparing(Tecnico::getAproveitamento).reversed());
 		}
 	}
-
+	
+	/**
+	 * povoar o banco de dados com dados para desenvolvimento
+	 * @author Weslley Barros
+	 * @deprecated
+	 */
+	
 	public void init() {
 
 		model.Jogador cano = new Jogador("Cano", "Argentino", "xx/xx/xxxx", 500000f, 300000000f, 13, false);

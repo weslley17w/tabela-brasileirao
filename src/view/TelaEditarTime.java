@@ -6,6 +6,14 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 
+/**
+ *
+ * Responsável por criar a tela para editar os times
+ *
+ * @author Weslley Barros
+ * @version 1.0
+ */
+
 public class TelaEditarTime implements ActionListener {
 
 	private boolean trava;
@@ -33,11 +41,17 @@ public class TelaEditarTime implements ActionListener {
 	private JTable jogadoresDotime = new JTable();
 	private JTable jogadoresSemtime = new JTable();
 
-	// jogadores
+	/**
+	 *
+	 * Responsável por criar a tela para editar edita o times
+	 * @param nome - Nome do técnico a ser editado
+	 * @author Weslley Barros
+	 * @version 1.0
+	 */
 
-	public TelaEditarTime(String id) {
+	public TelaEditarTime(String nome) {
 		this.trava = false;
-		this.time = db.getTime(id);
+		this.time = db.getTime(nome);
 		janela.setTitle(time.getNome());
 		btnAtualizar.addActionListener(this);
 		btnAtualizar.doClick();
@@ -52,9 +66,20 @@ public class TelaEditarTime implements ActionListener {
 		jogadores();
 		janela.setSize(560, 600);
 		janela.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.jogadoresDotime.setModel(controleJogadores.tabelaJogadoresPorTime(time));
+
+		this.jogadoresSemtime.setModel(controleJogadores.tabelaJogadoresPorTime(null));
 		janela.setVisible(true);
 
 	}
+
+	/**
+	 *
+	 * Responsável por criar e alinhar os elementos da tela
+	 * @param nome - Nome do time a ser editado
+	 * @author Weslley Barros
+	 * @version 1.0
+	 */
 
 	private void label() {
 
@@ -165,6 +190,14 @@ public class TelaEditarTime implements ActionListener {
 		janela.add(btnDemitir);
 		janela.add(btnSalvar);
 	}
+	
+	/**
+	*
+	* Responsável por ler os eventos de clique dos botões da tela
+	*
+	* @author  Weslley Barros
+	* @version 1.0
+	*/
 
 	public void actionPerformed(ActionEvent e) {
 		if (!this.trava) {

@@ -4,6 +4,14 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+*
+* Responsável por criar a tela para cadastrar jogador
+*
+* @author  Weslley Barros
+* @version 1.0
+*/
+
 public class TelaCadastrarJogador implements ActionListener {
 
 	private JFrame janela = new JFrame("Cadastrar Jogador");
@@ -19,6 +27,14 @@ public class TelaCadastrarJogador implements ActionListener {
 	private JButton btnCadastrarJogagor = new JButton("Cadastrar");
 	private controller.Jogador controleJogador = new controller.Jogador();
 
+	/**
+	*
+	* Responsável por configurar a janela
+	*
+	* @author  Weslley Barros
+	* @version 1.0
+	*/
+	
 	public TelaCadastrarJogador() {
 		janela.setLayout(null);
 		tela();
@@ -27,7 +43,15 @@ public class TelaCadastrarJogador implements ActionListener {
 		janela.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		janela.setVisible(true);
 	}
-
+	
+	/**
+	*
+	* Responsável por criar e alinhar os elementos da tela
+	*
+	* @author  Weslley Barros
+	* @version 1.0
+	*/
+	
 	private void tela() {
 
 		JLabel nome = new JLabel("Nome:");
@@ -83,6 +107,12 @@ public class TelaCadastrarJogador implements ActionListener {
 		janela.add(btnCadastrarJogagor);
 		btnCadastrarJogagor.addActionListener(this);
 	}
+	
+	/**
+	* Responsável por ler os eventos de clique dos botoes da tela
+	* @author  Weslley Barros
+	* @version 1.0
+	*/
 
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
@@ -100,20 +130,17 @@ public class TelaCadastrarJogador implements ActionListener {
 			}
 
 			if (cadJogador == 2) {
-				cadJogador = -1;
 				JOptionPane.showMessageDialog(null, "Todos os campos são de preenchimento obrigatório!",
 						"Campos obrigatórios", JOptionPane.WARNING_MESSAGE);
 			}
 
 			if (cadJogador == 3) {
-				cadJogador = -1;
 				JOptionPane.showMessageDialog(null,
 						"Os campos Salário e Multa devem ser um número real separado por um ponto", "Dados Inválidos",
 						JOptionPane.WARNING_MESSAGE);
 			}
 
 			if (cadJogador == 4) {
-				cadJogador = -1;
 				JOptionPane.showMessageDialog(null, "O campos Qnt. Gols deve ser um inteiro", "Dados Inválidos",
 						JOptionPane.WARNING_MESSAGE);
 			}

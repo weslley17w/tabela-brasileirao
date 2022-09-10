@@ -7,6 +7,12 @@ import javax.swing.*;
 import view.TelaCadastrarTime;
 import view.TelaEditarTime;
 
+/**
+* Responsável por criar o painel com lista de times
+* @author Weslley Barros
+* @version 1.0
+*/
+
 public class Times implements ActionListener{
 	
 	private model.Database db = model.Database.getInstance();
@@ -18,11 +24,16 @@ public class Times implements ActionListener{
 	private JButton btnAtualizarTime = new JButton("Atualizar");
 	private JButton btnDeletarTime = new JButton("Deletar");
 
+	/**
+	 * Responsável por criar e alinhar os elementos da tela
+	 * @author Weslley Barros
+	 * @return JPanel - Retorna um JPanel para outra classe consumir
+	 * @version 1.0
+	 */
 	
 	public JComponent pane() {
 		JPanel panelTime = new JPanel();
 		panelTime.setLayout(null);
-
 		this.tabelaTimes.setModel(controlerTime.dadosTabela());
 		tabelaTimes.setDefaultEditor(Object.class, null);
 		JScrollPane scrollPane = new JScrollPane(tabelaTimes);
@@ -54,10 +65,17 @@ public class Times implements ActionListener{
 		return panelTime;
 	}
 	
+	/**
+	* Responsável por ler os eventos de clique dos botoes da tela
+	* @author  Weslley Barros
+	* @version 1.0
+	*/
+	
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 		
 		if(src == btnDeletarTime) {
+			
 			int row = tabelaTimes.getSelectedRow();
 			if(row >= 0) {
 				String time = tabelaTimes.getModel().getValueAt(row, 0).toString();
