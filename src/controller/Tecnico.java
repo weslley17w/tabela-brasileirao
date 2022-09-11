@@ -28,7 +28,7 @@ public class Tecnico {
 	 * @return DefaultTableModel - Retorna o modelo de tabela com todos técnicos
 	 */
 	
-	public DefaultTableModel gerarLista() {
+	public DefaultTableModel dadosTabela() {
 		this.db.ordenarTecnico("ASC");
 		DefaultTableModel modeloTabelaTecnicos = new DefaultTableModel();
 		modeloTabelaTecnicos.addColumn("NOME");

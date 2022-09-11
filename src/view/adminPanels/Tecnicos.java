@@ -42,7 +42,7 @@ public class Tecnicos implements ActionListener {
 	public JComponent pane() {
 		JPanel panelTecnicos = new JPanel();
 		panelTecnicos.setLayout(null);
-		this.tabelaTecnicos.setModel(contorllerTecnico.gerarLista());
+		this.tabelaTecnicos.setModel(contorllerTecnico.dadosTabela());
 		JLabel tituloTecnico = new JLabel("Técnicos");
 		tabelaTecnicos.setDefaultEditor(Object.class, null);
 		JScrollPane scrollPane = new JScrollPane(tabelaTecnicos);
@@ -97,7 +97,7 @@ public class Tecnicos implements ActionListener {
 				}
 
 				if (validar == 0) {
-					this.tabelaTecnicos.setModel(contorllerTecnico.gerarLista());
+					this.tabelaTecnicos.setModel(contorllerTecnico.dadosTabela());
 					JOptionPane.showMessageDialog(null, "Tecnico excluído com sucesso", "Tecnico excluído",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
@@ -127,7 +127,7 @@ public class Tecnicos implements ActionListener {
 		}
 
 		if (src == btnAtualizarTecnico) {
-			this.tabelaTecnicos.setModel(contorllerTecnico.gerarLista());
+			this.tabelaTecnicos.setModel(contorllerTecnico.dadosTabela());
 		}
 
 	}

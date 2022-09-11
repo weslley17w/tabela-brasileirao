@@ -28,8 +28,8 @@ public class Jogador {
 	 * @param multa - Multa do jogador
 	 * @param qntGols - Quantidade de gols do jogador
 	 * @param passaporteEuropeu - Passaporte europeu
-	 * @return int - 0 = jogador cadastrado com sucesso, 0 = jogador cadastrado com sucesso,  2 = erro: campos vazios,  
-	 * 3 = salario é multa não são floats e 4 = erro: campo qntGols não é inteiro
+	 * @return int - 0 = jogador cadastrado com sucesso, 2 = erro: campos vazios, 3 = erro: salario é multa não são floats 
+	 * e 4 = erro: campo qntGols não é inteiro
 	 */
 	
 	public int cadastrar(String nome, String nacionalidade,String dtNascimento, String salario, String multa, String qntGols, String passaporteEuropeu) {
